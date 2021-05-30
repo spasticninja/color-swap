@@ -1,0 +1,14 @@
+@import 'styles/fonts';
+@import 'styles/colors';
+@import '../node_modules/@csstools/normalize.css';
+
+body {
+  background-color: $color-neutral;
+  max-width: 1200px;
+  margin:auto;
+  font-family: $monteserrat;
+}
+
+.color-swap-wrapper {
+  padding: 20px;
+}

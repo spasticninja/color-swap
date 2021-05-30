@@ -1,0 +1,12 @@
+@import '../../styles/fonts.scss';
+@import '../../styles/colors.scss';
+
+h1 {
+  font-family: $limelight;
+  margin-top: 0;
+
+  small {
+    display: block;
+    color: $color-grey;
+  }
+}

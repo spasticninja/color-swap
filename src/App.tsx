@@ -1,12 +1,16 @@
-import * as React from "react";
-import Main from "./Main";
+import GameGrid from './components/GameGrid/GameGrid';
+import TitleBar from './components/TitleBar/TitleBar';
+
+import { demoGame } from '../data/sample-game';
+import './app.scss';
 
 const App = () => {
-  const _appName = 'Awesome TypeScript, React, Parcel App!';
+  const _appName:string = 'Color Swap';
 
   return (
-    <div className="App">
-      <Main app={_appName}></Main>
+    <div className="color-swap-wrapper">
+      <TitleBar title={_appName} subtitle="test"></TitleBar>
+      <GameGrid tileColumns={demoGame}></GameGrid>
     </div>
   );
 }

@@ -1,0 +1,20 @@
+@import '../../styles/colors';
+
+.game-tile {
+  width: 100%;
+  display: block;
+  border: 1px solid $color-black;
+  padding: 30px 10px;
+
+  &:hover,
+  &:focus,
+  &:active {
+    border-color: $color-white;
+    cursor: pointer;
+  }
+
+  &.selected {
+    opacity: .75;
+    border-color: $color-green;
+  }
+}
