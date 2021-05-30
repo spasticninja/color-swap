@@ -1,22 +1,12 @@
 import * as React from "react";
-import { App } from "./App";
-import { Hello } from "./components/Hello";
+import Hello from "./components/Hello";
 
-export interface IMainProps {
-  app: App;
+type tMainProps = {
+  app: string;
 }
 
-export class Main extends React.Component<IMainProps, {}>
-{
-  constructor(props: IMainProps) {
-    super(props);
-  }
-
-  public render(): JSX.Element {
-    return (
-      <>
-        <Hello name={this.props.app.appName} />
-      </>
-    );
-  }
+const Main = (props: tMainProps) => {
+  return (<Hello name={props.app}></Hello>)
 }
+
+export default Main;

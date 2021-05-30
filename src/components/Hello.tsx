@@ -1,16 +1,13 @@
 import * as React from "react";
 
-export interface IHelloProps {
+type tHelloProps = {
   name: string;
 }
 
-export class Hello extends React.Component<IHelloProps, {}>
-{
-  public render(): JSX.Element {
-    return (
-      <>
-        <h3>Oh hey - {this.props.name}</h3>
-      </>
-    );
-  }
+const Hello = (props: tHelloProps) => {
+  return (
+    <h1>Hello! - {props.name}</h1>
+  )
 }
+
+export default Hello;
