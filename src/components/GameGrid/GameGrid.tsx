@@ -1,13 +1,10 @@
 import * as React from 'react';
 import GameTile from '../GameTile/GameTile';
+import GameContext from '../../context/gameContext';
 import './game-grid.scss';
 
-type tGameGrid = {
-  tileColumns: Array<any>;
-}
-
-const GameGrid = (props:tGameGrid) => {
-  const { tileColumns } = props;
+const GameGrid = () => {
+  const { gameBoard } = React.useContext(GameContext);
 
   const _grid = React.createRef<HTMLDivElement>();
 
@@ -25,7 +22,7 @@ const GameGrid = (props:tGameGrid) => {
       onKeyDown={onAccessibleKeyDown} 
       ref={_grid}
     >
-      {tileColumns.map((column, cIndex) => {
+      {gameBoard.map((column, cIndex) => {
         return (
           <div key={cIndex} className="game-grid-column">
             {column.map((tile, tIndex) => {

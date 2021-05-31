@@ -1,5 +1,6 @@
 import * as React from 'react';
 import classnames from 'classnames';
+import GameContext from '../../context/gameContext';
 import './game-tile.scss';
 
 type tGameTile = {
@@ -10,17 +11,17 @@ type tGameTile = {
 
 const GameTile = (props: tGameTile) => {
   const { color, xCoord, yCoord } = props;
-
   const [isSelected, setIsSelected] = React.useState(false);
+  const { updateGameBoard } = React.useContext(GameContext);
 
   const classes = classnames('game-tile', {
     'selected': isSelected
   });
 
-  const onTileClick = () => {
+  const onTileClick = () => {    
     if (!isSelected) {
-      // TODO: context update selection for updating our game
-      // onClickHandler(xCoord, yCoord);
+      updateGameBoard(xCoord, yCoord);
+      // TODO: how do I unselect the tiles when updateGameBoard flips a pair of tile?
     }
     setIsSelected(!isSelected);
   };

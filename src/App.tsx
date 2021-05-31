@@ -1,7 +1,7 @@
 import GameGrid from './components/GameGrid/GameGrid';
 import TitleBar from './components/TitleBar/TitleBar';
+import { GameContextProvider } from './context/gameContext';
 
-import { demoGame } from '../data/sample-game';
 import './app.scss';
 
 const App = () => {
@@ -9,8 +9,10 @@ const App = () => {
 
   return (
     <div className="color-swap-wrapper">
-      <TitleBar title={_appName} subtitle="test"></TitleBar>
-      <GameGrid tileColumns={demoGame}></GameGrid>
+      <GameContextProvider>
+        <TitleBar title={_appName} subtitle="test"></TitleBar>
+        <GameGrid></GameGrid>
+      </GameContextProvider>
     </div>
   );
 }
