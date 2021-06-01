@@ -12,7 +12,13 @@ type tGameTile = {
 const GameTile = (props: tGameTile) => {
   const { color, xCoord, yCoord } = props;
   const [isSelected, setIsSelected] = React.useState(false);
-  const { updateGameBoard } = React.useContext(GameContext);
+  const { swapClear, updateGameBoard } = React.useContext(GameContext);
+
+  React.useEffect(() => {
+    if (isSelected) {
+      setIsSelected(false);
+    }
+  }, [swapClear])
 
   const classes = classnames('game-tile', {
     'selected': isSelected

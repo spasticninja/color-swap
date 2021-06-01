@@ -1,17 +1,19 @@
+import * as React from 'react';
+import GameContext from '../../context/gameContext';
 import './title-bar.scss';
 
 export type tTitleBar = {
   title: string;
-  subtitle?: string;
 }
 
 const TitleBar = (props: tTitleBar) => {
-  const subTitle = props.subtitle ? (<small>{props.subtitle}</small>) : null
+  const { gameName } = React.useContext(GameContext);
+
   
   return (
     <h1>
       {props.title}
-      {subTitle}
+      <small>{gameName}</small>
     </h1>
   )
 }

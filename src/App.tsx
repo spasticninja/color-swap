@@ -1,3 +1,4 @@
+import * as React from 'react';
 import GameGrid from './components/GameGrid/GameGrid';
 import TitleBar from './components/TitleBar/TitleBar';
 import { GameContextProvider } from './context/gameContext';
@@ -10,7 +11,7 @@ const App = () => {
   return (
     <div className="color-swap-wrapper">
       <GameContextProvider>
-        <TitleBar title={_appName} subtitle="test"></TitleBar>
+        <TitleBar title={_appName}></TitleBar>
         <GameGrid></GameGrid>
       </GameContextProvider>
     </div>
