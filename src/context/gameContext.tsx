@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { demoGame } from '../../data/sample-game';
 import { gameBoardsBase } from '../../data/game-boards';
 import useGenerateBoard from '../hooks/useGenerateBoard';
 import useGameScramble from '../hooks/useGameScramble';
@@ -20,18 +19,9 @@ export default GameContext;
 export const GameContextProvider = ({children}) => {
   const initGameBoard = useGenerateBoard(gameBoardsBase[3].colors, 9, 10);
   const [gameBoard, setGameBoard] = React.useState<Array<Array<tGameTile>>>(useGameScramble(initGameBoard));
-  const [gameName, setGameName] = React.useState(gameBoardsBase[3].name);
+  const gameName = gameBoardsBase[3].name;
   const [swapClear, setSwapClear] = React.useState(false);
   const [point1, setPoint1] = React.useState([-1,-1]); // -1 indicates no selection
-  // console.log(gameBoard)
-
-  // React.useEffect(() => {
-  //   // initial render
-  //   const initialGameBoard = generateBoard(gameBoardsBase[0].colors);
-  //   setGameName(gameBoardsBase[0].name);
-  //   setGameBoard(initialGameBoard);
-  //   setGameSolution(initialGameBoard);
-  // }, []);
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -82,7 +72,6 @@ export const GameContextProvider = ({children}) => {
     } else {
       console.log('incorrect tiles: ', incorrectTiles)
     }
-
   }
 
   return (
