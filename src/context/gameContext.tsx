@@ -1,10 +1,13 @@
 import * as React from 'react';
 import { demoGame } from '../../data/sample-game';
 import { gameBoardsBase } from '../../data/game-boards';
-import Gradient from 'javascript-color-gradient';
+import useGenerateBoard from '../hooks/useGenerateBoard';
+import useGameScramble from '../hooks/useGameScramble';
+import useCheckSolution from '../hooks/useCheckSolution';
+import { tGameTile } from '../components/global';
 
 type tGameContext = {
-  gameBoard: Array<Array<string>>;
+  gameBoard: Array<Array<tGameTile>>;
   gameName: string;
   swapClear: boolean;
   updateGameBoard: Function;
@@ -14,35 +17,13 @@ const GameContext = React.createContext<tGameContext>(null);
 
 export default GameContext;
 
-const generateBoard = (colorArray: Array<string>): Array<Array<string>> => {
-  const topRow = new Gradient;
-  const bottomRow = new Gradient;
-  let board = [];
-
-  topRow.setGradient(colorArray[0], colorArray[1]);
-  topRow.setMidpoint(9);
-  bottomRow.setGradient(colorArray[2], colorArray[3]);
-  bottomRow.setMidpoint(9);
-
-  for (let i = 0; i < 9; i ++) {
-    const columnGradient = new Gradient;
-    columnGradient.setGradient(topRow.getColor(i+1), bottomRow.getColor(i+1));
-    board.push(columnGradient.getArray());
-  }
-  
-  return board;
-}
-
 export const GameContextProvider = ({children}) => {
-  const [gameBoard, setGameBoard] = React.useState<Array<Array<string>>>(
-    generateBoard(gameBoardsBase[1].colors)
-  );
-  const [gameSolution, setGameSolution] = React.useState<Array<Array<string>>>(
-    generateBoard(gameBoardsBase[1].colors)
-  );
-  const [gameName, setGameName] = React.useState(gameBoardsBase[1].name);
+  const initGameBoard = useGenerateBoard(gameBoardsBase[3].colors, 9, 10);
+  const [gameBoard, setGameBoard] = React.useState<Array<Array<tGameTile>>>(useGameScramble(initGameBoard));
+  const [gameName, setGameName] = React.useState(gameBoardsBase[3].name);
   const [swapClear, setSwapClear] = React.useState(false);
   const [point1, setPoint1] = React.useState([-1,-1]); // -1 indicates no selection
+  // console.log(gameBoard)
 
   // React.useEffect(() => {
   //   // initial render
@@ -70,17 +51,38 @@ export const GameContextProvider = ({children}) => {
     } else {
       // swap scenario
       let currentBoard = [...gameBoard];
-      let point1Val = gameBoard[point1[0]][point1[1]];
-      console.log(point1Val);
+      let point1Val = currentBoard[point1[0]][point1[1]];
+      let point2Val = currentBoard[x][y];
+      
+      if (point2Val.correctCoord[0] === point1[0] && point2Val.correctCoord[1] === point1[1]) {
+        point2Val.isCorrect = true
+      } else {
+        point2Val.isCorrect = false;
+      }
+
+      if (point1Val.correctCoord[0] === x && point1Val.correctCoord[1] === y) {
+        point1Val.isCorrect = true
+      } else {
+        point1Val.isCorrect = false;
+      }
       
       currentBoard[point1[0]][point1[1]] = currentBoard[x][y];
       currentBoard[x][y] = point1Val;
+
       setGameBoard(currentBoard);
       setSwapClear(true);
 
       point1[0] = -1;
       point1[1] = -1;
     }
+
+    const incorrectTiles = useCheckSolution(gameBoard);
+    if (incorrectTiles === 0) {
+      // winning condition
+    } else {
+      console.log('incorrect tiles: ', incorrectTiles)
+    }
+
   }
 
   return (

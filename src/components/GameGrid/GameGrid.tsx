@@ -18,7 +18,7 @@ const GameGrid = () => {
       case 'ArrowLeft': 
         e.preventDefault();
         if (findCurrentFocusIndex <= 10) {
-          // need to go back to column 1
+          // need to go last column
           allTiles[80 + ycoord].focus();
         } else {
           allTiles[findCurrentFocusIndex - 10].focus();
@@ -36,7 +36,7 @@ const GameGrid = () => {
       case 'ArrowDown':
         e.preventDefault();
         if (ycoord === 9) {
-          // need to go back to column 1
+          // need to go back to top
           allTiles[findCurrentFocusIndex - 9].focus();
         } else {
           allTiles[findCurrentFocusIndex + 1].focus();
@@ -45,7 +45,7 @@ const GameGrid = () => {
       case 'ArrowUp':
         e.preventDefault();
         if (ycoord === 0) {
-          // need to go back to column 1
+          // need to go bottom
           allTiles[findCurrentFocusIndex + 9].focus();
         } else {
           allTiles[findCurrentFocusIndex - 1].focus();
@@ -66,7 +66,7 @@ const GameGrid = () => {
             {column.map((tile, tIndex) => {
               return (
                 <GameTile 
-                  color={tile} 
+                  tile={tile} 
                   xCoord={cIndex} 
                   yCoord={tIndex} 
                   key={tIndex}

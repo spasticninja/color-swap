@@ -1,4 +1,6 @@
 @import '../../styles/colors';
+@import '../../styles/icons';
+@import '../../styles/helpers';
 
 .game-tile {
   width: 100%;
@@ -16,5 +18,24 @@
   &.selected {
     opacity: .75;
     border-color: $color-green;
+  }
+
+  .lock-icon {
+    background-image: url('#{$circle}');
+    width: 1rem;
+    height: 1rem;
+    background-position: center;
+    background-size: contain;
+    display: inline-flex;
+  }
+  .open-tile {
+    width: 1rem;
+    height:1rem;
+    display: inline-flex;
+  }
+  .selected-icon {
+    background-image: url('#{$check}');
+    background-position: center;
+    background-size: contain;
   }
 }

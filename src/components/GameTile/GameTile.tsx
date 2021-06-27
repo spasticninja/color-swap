@@ -1,16 +1,17 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import GameContext from '../../context/gameContext';
+import { tGameTile } from '../global';
 import './game-tile.scss';
 
-type tGameTile = {
-  color: string;
+type tGameTileProps = {
+  tile: tGameTile
   xCoord: Number;
   yCoord: Number;
 }
 
-const GameTile = (props: tGameTile) => {
-  const { color, xCoord, yCoord } = props;
+const GameTile = (props: tGameTileProps) => {
+  const { tile, xCoord, yCoord } = props;
   const [isSelected, setIsSelected] = React.useState(false);
   const { swapClear, updateGameBoard } = React.useContext(GameContext);
 
@@ -21,25 +22,41 @@ const GameTile = (props: tGameTile) => {
   }, [swapClear])
 
   const classes = classnames('game-tile', {
-    'selected': isSelected
+    'selected': isSelected,
+    'locked': tile.isLocked
   });
+  const iconClass = classnames('open-tile', {
+    'selected-icon': isSelected
+  })
 
-  const onTileClick = () => {    
+  const onTileClick = () => {
+    if (tile.isLocked) { return false };
+
     if (!isSelected) {
       updateGameBoard(xCoord, yCoord);
-      // TODO: how do I unselect the tiles when updateGameBoard flips a pair of tile?
     }
     setIsSelected(!isSelected);
   };
 
-  // TODO: create a selected icon
+  const icon = tile.isLocked ? (
+    <span className="lock-icon">
+      <span className="sr-only">Locked Tile</span>
+    </span>
+  ) : (
+    <span className={iconClass}>
+      <span className="sr-only">Tile selected: {isSelected}</span>
+    </span>
+  );
 
   return (
     <button
-      style={{ backgroundColor: color }}
+      style={{ backgroundColor: tile.color }}
       onClick={onTileClick}
+      disabled={tile.isLocked}
       className={classes}
-    >{xCoord}, {yCoord}</button>
+    >
+      {icon}
+    </button>
   );
 };
 
