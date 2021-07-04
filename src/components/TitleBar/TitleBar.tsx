@@ -8,7 +8,6 @@ export type tTitleBar = {
 
 const TitleBar = (props: tTitleBar) => {
   const { gameName } = React.useContext(GameContext);
-
   
   return (
     <h1>

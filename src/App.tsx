@@ -1,19 +1,35 @@
 import * as React from 'react';
-import GameGrid from './components/GameGrid/GameGrid';
-import TitleBar from './components/TitleBar/TitleBar';
+import Home from './pages/home';
+import Game from './pages/game';
+import Win from './pages/win';
 import { GameContextProvider } from './context/gameContext';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
 import './app.scss';
 
 const App = () => {
-  const _appName:string = 'Color Swap';
 
   return (
     <div className="color-swap-wrapper">
-      <GameContextProvider>
-        <TitleBar title={_appName}></TitleBar>
-        <GameGrid></GameGrid>
-      </GameContextProvider>
+      <Router>
+        <GameContextProvider>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/win">
+              <Win />
+            </Route>
+            <Route path="/game">
+              <Game />
+            </Route>
+          </Switch>
+        </GameContextProvider>
+      </Router>
     </div>
   );
 }
