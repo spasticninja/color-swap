@@ -12,12 +12,12 @@ const Home = () => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <TitleBar title="Color Swap"></TitleBar>
       <h2>Welcome to Color Swap!</h2>
-      <p>Rules are simple. Select one tile and then select a second to swap them. The tiles with the dots are unclickable and unswapanle, but that's fine. They are already in the right place.</p>
+      <p>Rules are simple. Select one tile and then select a second to swap them. The tiles with the dots are unclickable and unswapable, but that's fine. They are already in the right place.</p>
       <button onClick={startGame}>Get to playing!</button>
-    </React.Fragment>
+    </>
   )
 }
 

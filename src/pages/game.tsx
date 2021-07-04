@@ -6,10 +6,10 @@ import GameGrid from '../components/GameGrid/GameGrid';
 const Game = () => {
   const { gameBoard, gameName } = React.useContext(GameContext);
   return (
-    <React.Fragment>
-      <TitleBar title="Color Swap"></TitleBar>
+    <>
+      <TitleBar title="Color Swap" showTitle></TitleBar>
       <GameGrid></GameGrid>
-    </React.Fragment>
+    </>
   )
 }
 

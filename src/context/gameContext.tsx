@@ -4,6 +4,7 @@ import useGenerateBoard from '../hooks/useGenerateBoard';
 import useGameScramble from '../hooks/useGameScramble';
 import useCheckSolution from '../hooks/useCheckSolution';
 import { tGameTile } from '../components/global';
+import { useHistory } from "react-router-dom";
 
 type tGameContext = {
   gameBoard: Array<Array<tGameTile>>;
@@ -22,6 +23,7 @@ export const GameContextProvider = ({children}) => {
   const gameName = gameBoardsBase[3].name;
   const [swapClear, setSwapClear] = React.useState(false);
   const [point1, setPoint1] = React.useState([-1,-1]); // -1 indicates no selection
+  const history = useHistory();
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -69,8 +71,9 @@ export const GameContextProvider = ({children}) => {
     const incorrectTiles = useCheckSolution(gameBoard);
     if (incorrectTiles === 0) {
       // winning condition
+      history.push('/win');
     } else {
-      console.log('incorrect tiles: ', incorrectTiles)
+      console.log('incorrect tiles: ', incorrectTiles);
     }
   }
 

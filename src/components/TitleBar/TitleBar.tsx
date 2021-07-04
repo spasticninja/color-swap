@@ -4,15 +4,17 @@ import './title-bar.scss';
 
 export type tTitleBar = {
   title: string;
+  showTitle?: boolean;
 }
 
 const TitleBar = (props: tTitleBar) => {
+  const {title, showTitle = false} = props;
   const { gameName } = React.useContext(GameContext);
   
   return (
     <h1>
-      {props.title}
-      <small>{gameName}</small>
+      {title}
+      {showTitle ? <small>{gameName}</small> : <></>}
     </h1>
   )
 }
