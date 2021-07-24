@@ -85,45 +85,45 @@ export const gameBoardsBase = [{
 }, {
   name: 'Harvest Fields',
   slug: 'harvest-fields',
-  color: ['#7A871E', '#104210', '#E55B13', '#F6A21E']
+  colors: ['#7A871E', '#104210', '#E55B13', '#F6A21E']
 }, {
   name: 'Skater Girl',
   slug: 'skater-girl',
-  color: ['#66D2D6', '#FBC740', '#BD97CB', '#E56997']
+  colors: ['#66D2D6', '#FBC740', '#BD97CB', '#E56997']
 }, {
   name: 'Easter Egg Nest',
   slug: 'easter-egg-nest',
-  color: ['#EFF1DB', '#FFD4DB', '#D3B5E5', '#BBE7FE']
+  colors: ['#EFF1DB', '#FFD4DB', '#D3B5E5', '#BBE7FE']
 }, {
   name: 'Touch and Electrify',
   slug: 'touch-and-electrify',
-  color: ['#5F34E2', '#D4BBDD', '#49A9C0', '#F5D710']
+  colors: ['#5F34E2', '#D4BBDD', '#49A9C0', '#F5D710']
 }, {
   name: 'Sweater Weather',
   slug: 'sweater-weather',
-  color: ['#3B2244', '#105160', '#2D7670', '#CD966B']
+  colors: ['#3B2244', '#105160', '#2D7670', '#CD966B']
 }, {
   name: 'Balloons for Halloween',
   slug: 'balloons-for-halloween',
-  color: ['#F6CDC4', '#FC841F', '#B497BF', '#5D1966']
+  colors: ['#F6CDC4', '#FC841F', '#B497BF', '#5D1966']
 }, {
   name: 'Balloon in the Sky',
   slug: 'balloon-in-the-sky',
-  color: ['#3C84F0', '#A06AB4', '#D4BBDD', '#82B9E9']
+  colors: ['#3C84F0', '#A06AB4', '#D4BBDD', '#82B9E9']
 }, {
   name: 'Caught by Summer',
   slug: 'caught-by-summer',
-  color: ['#3B2244', '#A06AB4', '#E845AE', '#EBA408']
+  colors: ['#3B2244', '#A06AB4', '#E845AE', '#EBA408']
 }, {
   name: 'Bubblegum Charm',
   slug: 'bubblegum-charm',
-  color: ['#E4E3E0', '#A998EE', '#D74A76', '#E0C7E9']
-}]
+  colors: ['#E4E3E0', '#A998EE', '#D74A76', '#E0C7E9']
+}];
 
 /*
 {
   name: '',
   slug: '',
-  color: []
+  colors: []
 }
 */

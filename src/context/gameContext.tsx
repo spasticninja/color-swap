@@ -11,6 +11,7 @@ type tGameContext = {
   gameName: string;
   swapClear: boolean;
   updateGameBoard: Function;
+  initGame: Function;
 }
 
 const GameContext = React.createContext<tGameContext>(null);
@@ -18,9 +19,8 @@ const GameContext = React.createContext<tGameContext>(null);
 export default GameContext;
 
 export const GameContextProvider = ({children}) => {
-  const initGameBoard = useGenerateBoard(gameBoardsBase[3].colors, 9, 10);
-  const [gameBoard, setGameBoard] = React.useState<Array<Array<tGameTile>>>(useGameScramble(initGameBoard));
-  const gameName = gameBoardsBase[3].name;
+  const [gameBoard, setGameBoard] = React.useState<Array<Array<tGameTile>>|undefined>();
+  const [gameName, setGameName] = React.useState('');
   const [swapClear, setSwapClear] = React.useState(false);
   const [point1, setPoint1] = React.useState([-1,-1]); // -1 indicates no selection
   const history = useHistory();
@@ -30,7 +30,37 @@ export const GameContextProvider = ({children}) => {
       // auto switches to false for the next pairing
       setSwapClear(false);
     }, 200)
-  }, [swapClear])
+  }, [swapClear]);
+
+  React.useEffect(() => {
+    updateLocalStorage();
+  }, [gameBoard]);
+
+  const updateLocalStorage = () => {
+    if (gameName && gameBoard) {
+      const newGameStatus = {
+        gameName: gameName,
+        gameBoard: gameBoard,
+      }
+      window.localStorage.setItem('color-swap-game', JSON.stringify(newGameStatus));
+    }
+  }
+
+  const initGame = () => {
+    const savedGame = JSON.parse(window.localStorage.getItem('color-swap-game'));
+    if (savedGame && savedGame.gameName && savedGame.gameBoard) {
+      setGameName(savedGame.gameName);
+      setGameBoard(savedGame.gameBoard);
+    } else {
+      const numBoards = gameBoardsBase.length;
+      const randomIndex = Math.floor(Math.random() * (numBoards - 1));
+      const initGameBoard = useGenerateBoard(gameBoardsBase[randomIndex].colors, 9, 10); 
+      // TODO: difficulty mode via game board size
+
+      setGameName(gameBoardsBase[randomIndex].name); 
+      setGameBoard(useGameScramble(initGameBoard));
+    }
+  }
 
   const updateGameBoard = (x, y) => {
     if (point1[0] === -1 && point1[1] === -1) {
@@ -83,7 +113,8 @@ export const GameContextProvider = ({children}) => {
         gameBoard,
         gameName,
         swapClear,
-        updateGameBoard
+        updateGameBoard,
+        initGame
       }}
     >
       {children}

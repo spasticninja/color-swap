@@ -55,28 +55,30 @@ const GameGrid = () => {
   }
 
   return (
-    <div 
-      className="game-grid" 
-      onKeyDown={onAccessibleKeyDown} 
-      ref={_grid}
-    >
-      {gameBoard.map((column, cIndex) => {
-        return (
-          <div key={cIndex} className="game-grid-column">
-            {column.map((tile, tIndex) => {
-              return (
-                <GameTile 
-                  tile={tile} 
-                  xCoord={cIndex} 
-                  yCoord={tIndex} 
-                  key={tIndex}
-                />
-              )
-            })}
-          </div>
-        );
+    <>{gameBoard && 
+      <div
+        className="game-grid"
+        onKeyDown={onAccessibleKeyDown}
+        ref={_grid}
+      >
+        {gameBoard.map((column, cIndex) => {
+          return (
+            <div key={cIndex} className="game-grid-column">
+              {column.map((tile, tIndex) => {
+                return (
+                  <GameTile
+                    tile={tile}
+                    xCoord={cIndex}
+                    yCoord={tIndex}
+                    key={tIndex}
+                  />
+                )
+              })}
+            </div>
+          );
         })}
-    </div>
+      </div>
+    }</>
   )
 }
 
