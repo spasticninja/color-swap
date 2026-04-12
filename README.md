@@ -15,10 +15,11 @@ A react color tile swap game! Inspired by Color Puzzle and I Love Hue.
 ## TODOS:
 * [x] generator & randomizer
 * [x] selected icon
-* [ ] make selected color box more obvious
-* [ ] Add swap icon
+* [x] make selected color box more obvious
+* [x] Add swap icon
 * [ ] game routing to different boards
-* [ ] save game to localStorage to persist game
+* [x] save game to localStorage to persist game
+* [ ] Add streak counter
 * [ ] Start screen will either randomly select game on intial start or allow them to continue playing (if game in localStorage)
 * [ ] win screen love - make prettier and linkable?
 * [ ] share & next game selection
