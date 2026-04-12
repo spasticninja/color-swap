@@ -23,12 +23,13 @@ describe('Win', () => {
         value={{
           gameBoard: undefined,
           gameName: 'Solved Puzzle',
+          gameSlug: 'solved-puzzle',
           swapClear: false,
           hasSelectedTile: false,
           selectedTile: null,
           updateGameBoard: () => {},
-          initGame: () => {},
-          startNewGame: () => {},
+          openGame: () => 'loaded',
+          startNewGame: () => true,
           clearSavedGame
         }}
       >
@@ -47,11 +48,12 @@ describe('Win', () => {
         value={{
           gameBoard: undefined,
           gameName: 'Solved Puzzle',
+          gameSlug: 'solved-puzzle',
           swapClear: false,
           hasSelectedTile: false,
           selectedTile: null,
           updateGameBoard: () => {},
-          initGame: () => {},
+          openGame: () => 'loaded',
           startNewGame,
           clearSavedGame: () => {}
         }}

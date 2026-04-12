@@ -1,4 +1,10 @@
-export const gameBoardsBase = [{
+export type tGameBoardBase = {
+  name: string;
+  slug: string;
+  colors: [string, string, string, string];
+};
+
+export const gameBoardsBase: tGameBoardBase[] = [{
   name: 'Four deep colors',
   slug: 'four-deep-colors',
   colors: ['#c6282c', '#e9b24e', '#457527', '#03155b']
@@ -119,6 +125,15 @@ export const gameBoardsBase = [{
   slug: 'bubblegum-charm',
   colors: ['#E4E3E0', '#A998EE', '#D74A76', '#E0C7E9']
 }];
+
+export const getGameBoardBySlug = (slug: string): tGameBoardBase | undefined => (
+  gameBoardsBase.find(gameBoard => gameBoard.slug === slug)
+);
+
+export const getRandomGameBoard = (): tGameBoardBase => {
+  const randomIndex = Math.floor(Math.random() * gameBoardsBase.length);
+  return gameBoardsBase[randomIndex];
+};
 
 /*
 {

@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 const STORAGE_KEY = 'color-swap-game';
 
 const Home = () => {
-  const { initGame } = React.useContext(GameContext);
+  const { openGame } = React.useContext(GameContext);
   const history = useHistory();
   const [hasSavedGame, setHasSavedGame] = React.useState(false);
 
@@ -15,7 +15,7 @@ const Home = () => {
   }, []);
 
   const startGame = () => {
-    initGame();
+    openGame();
     history.push('/game');
   };
 

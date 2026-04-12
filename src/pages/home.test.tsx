@@ -19,12 +19,13 @@ describe('Home', () => {
         value={{
           gameBoard: undefined,
           gameName: '',
+          gameSlug: '',
           swapClear: false,
           hasSelectedTile: false,
           selectedTile: null,
           updateGameBoard: () => {},
-          initGame: () => {},
-          startNewGame: () => {},
+          openGame: () => 'loaded',
+          startNewGame: () => true,
           clearSavedGame: () => {}
         }}
       >
@@ -43,12 +44,13 @@ describe('Home', () => {
         value={{
           gameBoard: undefined,
           gameName: '',
+          gameSlug: '',
           swapClear: false,
           hasSelectedTile: false,
           selectedTile: null,
           updateGameBoard: () => {},
-          initGame: () => {},
-          startNewGame: () => {},
+          openGame: () => 'loaded',
+          startNewGame: () => true,
           clearSavedGame: () => {}
         }}
       >

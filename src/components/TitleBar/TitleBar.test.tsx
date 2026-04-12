@@ -9,12 +9,13 @@ describe('TitleBar', () => {
         value={{
           gameBoard: undefined,
           gameName: 'Ignored Puzzle',
+          gameSlug: 'ignored-puzzle',
           swapClear: false,
           hasSelectedTile: false,
           selectedTile: null,
           updateGameBoard: () => {},
-          initGame: () => {},
-          startNewGame: () => {},
+          openGame: () => 'loaded',
+          startNewGame: () => true,
           clearSavedGame: () => {}
         }}
       >
@@ -32,12 +33,13 @@ describe('TitleBar', () => {
         value={{
           gameBoard: undefined,
           gameName: 'Four deep colors',
+          gameSlug: 'four-deep-colors',
           swapClear: false,
           hasSelectedTile: false,
           selectedTile: null,
           updateGameBoard: () => {},
-          initGame: () => {},
-          startNewGame: () => {},
+          openGame: () => 'loaded',
+          startNewGame: () => true,
           clearSavedGame: () => {}
         }}
       >

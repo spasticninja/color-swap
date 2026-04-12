@@ -24,7 +24,13 @@ const App = () => {
             <Route path="/win">
               <Win />
             </Route>
-            <Route path="/game">
+            <Route exact path="/game/:slug">
+              <Game />
+            </Route>
+            <Route exact path="/games/:slug">
+              <Game />
+            </Route>
+            <Route exact path="/game">
               <Game />
             </Route>
           </Switch>

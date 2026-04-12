@@ -17,12 +17,13 @@ describe('GameTile', () => {
         value={{
           gameBoard: undefined,
           gameName: '',
+          gameSlug: '',
           swapClear: false,
           hasSelectedTile: true,
           selectedTile: [0, 0],
           updateGameBoard: () => {},
-          initGame: () => {},
-          startNewGame: () => {},
+          openGame: () => 'loaded',
+          startNewGame: () => true,
           clearSavedGame: () => {}
         }}
       >
@@ -40,12 +41,13 @@ describe('GameTile', () => {
         value={{
           gameBoard: undefined,
           gameName: '',
+          gameSlug: '',
           swapClear: false,
           hasSelectedTile: true,
           selectedTile: [1, 1],
           updateGameBoard: () => {},
-          initGame: () => {},
-          startNewGame: () => {},
+          openGame: () => 'loaded',
+          startNewGame: () => true,
           clearSavedGame: () => {}
         }}
       >
@@ -65,12 +67,13 @@ describe('GameTile', () => {
         value={{
           gameBoard: undefined,
           gameName: '',
+          gameSlug: '',
           swapClear: false,
           hasSelectedTile: false,
           selectedTile: null,
           updateGameBoard,
-          initGame: () => {},
-          startNewGame: () => {},
+          openGame: () => 'loaded',
+          startNewGame: () => true,
           clearSavedGame: () => {}
         }}
       >
