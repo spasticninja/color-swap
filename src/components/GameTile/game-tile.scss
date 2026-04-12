@@ -3,10 +3,13 @@
 @import '../../styles/helpers';
 
 .game-tile {
+  position: relative;
   width: 100%;
+  height: 100%;
   display: block;
   border: 1px solid $color-black;
   padding: 30px 10px;
+  transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
 
   &:hover,
   &:focus,
@@ -16,26 +19,59 @@
   }
 
   &.selected {
-    opacity: .75;
     border-color: $color-green;
+    transform: scale(1.03);
   }
 
   .lock-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
     background-image: url('#{$circle}');
     width: 1rem;
     height: 1rem;
     background-position: center;
     background-size: contain;
     display: inline-flex;
+    transform: translate(-50%, -50%);
   }
-  .open-tile {
+
+  .tile-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
     width: 1rem;
-    height:1rem;
+    height: 1rem;
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -50%);
   }
+
   .selected-icon {
     background-image: url('#{$check}');
     background-position: center;
     background-size: contain;
+    opacity: 1;
+    visibility: visible;
   }
-}
+
+  .swap-icon {
+    opacity: 0;
+    visibility: hidden;
+    color: $color-white;
+    text-shadow: 0 1px 4px rgba($color-black, .55);
+    transition: opacity .15s ease, transform .15s ease, visibility .15s ease;
+    transform: translate(-50%, -50%) scale(.9);
+  }
+
+  &.swap-ready:hover .swap-icon,
+  &.swap-ready:focus .swap-icon,
+  &.swap-ready:focus-visible .swap-icon {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+  }
+} 

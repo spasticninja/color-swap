@@ -1,37 +1,24 @@
 import { render, screen } from '@testing-library/react';
-import TitleBar from './TitleBar';
-import GameContext from '../../context/gameContext';
+import Home from './home';
+import GameContext from '../context/gameContext';
 
-describe('TitleBar', () => {
-  it('renders the base title', () => {
-    render(
-      <GameContext.Provider
-        value={{
-          gameBoard: undefined,
-          gameName: 'Ignored Puzzle',
-          swapClear: false,
-          hasSelectedTile: false,
-          selectedTile: null,
-          updateGameBoard: () => {},
-          initGame: () => {},
-          startNewGame: () => {},
-          clearSavedGame: () => {}
-        }}
-      >
-        <TitleBar title="Color Swap" />
-      </GameContext.Provider>
-    );
+jest.mock('react-router-dom', () => ({
+  useHistory: () => ({
+    push: jest.fn()
+  })
+}));
 
-    expect(screen.getByRole('heading', { name: 'Color Swap' })).toBeInTheDocument();
-    expect(screen.queryByText('Ignored Puzzle')).not.toBeInTheDocument();
+describe('Home', () => {
+  beforeEach(() => {
+    window.localStorage.clear();
   });
 
-  it('renders the puzzle title when showTitle is enabled', () => {
+  it('shows a new game label when no saved game exists', () => {
     render(
       <GameContext.Provider
         value={{
           gameBoard: undefined,
-          gameName: 'Four deep colors',
+          gameName: '',
           swapClear: false,
           hasSelectedTile: false,
           selectedTile: null,
@@ -41,10 +28,34 @@ describe('TitleBar', () => {
           clearSavedGame: () => {}
         }}
       >
-        <TitleBar title="Color Swap" showTitle />
+        <Home />
       </GameContext.Provider>
     );
 
-    expect(screen.getByText('Four deep colors')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Start a new game' })).toBeInTheDocument();
+  });
+
+  it('shows a continue label when a saved game exists', () => {
+    window.localStorage.setItem('color-swap-game', JSON.stringify({ gameName: 'Saved', gameBoard: [] }));
+
+    render(
+      <GameContext.Provider
+        value={{
+          gameBoard: undefined,
+          gameName: '',
+          swapClear: false,
+          hasSelectedTile: false,
+          selectedTile: null,
+          updateGameBoard: () => {},
+          initGame: () => {},
+          startNewGame: () => {},
+          clearSavedGame: () => {}
+        }}
+      >
+        <Home />
+      </GameContext.Provider>
+    );
+
+    expect(screen.getByRole('button', { name: 'Continue playing' })).toBeInTheDocument();
   });
 });

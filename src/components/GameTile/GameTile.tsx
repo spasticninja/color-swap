@@ -12,21 +12,17 @@ type tGameTileProps = {
 
 const GameTile = (props: tGameTileProps) => {
   const { tile, xCoord, yCoord } = props;
-  const [isSelected, setIsSelected] = React.useState(false);
-  const { swapClear, updateGameBoard } = React.useContext(GameContext);
-
-  React.useEffect(() => {
-    if (isSelected) {
-      setIsSelected(false);
-    }
-  }, [isSelected, swapClear]);
+  const { hasSelectedTile, selectedTile, updateGameBoard } = React.useContext(GameContext);
+  const isSelected = selectedTile?.[0] === xCoord && selectedTile?.[1] === yCoord;
 
   const classes = classnames('game-tile', {
     'selected': isSelected,
-    'locked': tile.isLocked
+    'locked': tile.isLocked,
+    'swap-ready': hasSelectedTile && !isSelected
   });
-  const iconClass = classnames('open-tile', {
-    'selected-icon': isSelected
+  const iconClass = classnames('tile-icon', {
+    'selected-icon': isSelected,
+    'swap-icon': hasSelectedTile && !isSelected
   });
 
   const onTileClick = () => {
@@ -34,10 +30,7 @@ const GameTile = (props: tGameTileProps) => {
       return;
     }
 
-    if (!isSelected) {
-      updateGameBoard(xCoord, yCoord);
-    }
-    setIsSelected(!isSelected);
+    updateGameBoard(xCoord, yCoord);
   };
 
   const icon = tile.isLocked ? (
@@ -46,7 +39,16 @@ const GameTile = (props: tGameTileProps) => {
     </span>
   ) : (
     <span className={iconClass}>
-      <span className="sr-only">Tile selected: {isSelected}</span>
+      {isSelected ? (
+        <span className="sr-only">Tile selected</span>
+      ) : hasSelectedTile ? (
+        <>
+          <i aria-hidden="true" className="fa-solid fa-arrows-rotate"></i>
+          <span className="sr-only">Swap with selected tile</span>
+        </>
+      ) : (
+        <span className="sr-only">Selectable tile</span>
+      )}
     </span>
   );
 

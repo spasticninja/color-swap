@@ -1,13 +1,20 @@
 import * as React from 'react';
 import GameContext from '../context/gameContext';
 import TitleBar from '../components/TitleBar/TitleBar';
+import { useHistory } from "react-router-dom";
 
 const Win = () => {
-  const { gameName } = React.useContext(GameContext);
+  const { clearSavedGame, gameName, startNewGame } = React.useContext(GameContext);
+  const history = useHistory();
+
+  React.useEffect(() => {
+    clearSavedGame();
+  }, [clearSavedGame]);
 
   const onNewGame = () => {
-    console.log('new puzzle button');
-  }
+    startNewGame();
+    history.push('/game');
+  };
   
   return(
     <>
@@ -18,6 +25,6 @@ const Win = () => {
       <button onClick={onNewGame}>Try another puzzle</button>
     </>
   );
-}
+};
 
 export default Win;
