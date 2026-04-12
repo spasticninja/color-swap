@@ -7,47 +7,63 @@ import { tGameTile } from '../components/global';
 import { useHistory } from "react-router-dom";
 
 type tGameContext = {
-  gameBoard: Array<Array<tGameTile>>;
+  gameBoard?: tGameTile[][];
   gameName: string;
   swapClear: boolean;
-  updateGameBoard: Function;
-  initGame: Function;
-}
+  updateGameBoard: (x: number, y: number) => void;
+  initGame: () => void;
+};
 
-const GameContext = React.createContext<tGameContext>(null);
+const GameContext = React.createContext<tGameContext>({
+  gameBoard: undefined,
+  gameName: '',
+  swapClear: false,
+  updateGameBoard: () => {},
+  initGame: () => {}
+});
 
 export default GameContext;
 
-export const GameContextProvider = ({children}) => {
-  const [gameBoard, setGameBoard] = React.useState<Array<Array<tGameTile>>|undefined>();
+type GameContextProviderProps = {
+  children: React.ReactNode;
+};
+
+export const GameContextProvider = ({ children }: GameContextProviderProps) => {
+  const [gameBoard, setGameBoard] = React.useState<tGameTile[][] | undefined>();
   const [gameName, setGameName] = React.useState('');
   const [swapClear, setSwapClear] = React.useState(false);
-  const [point1, setPoint1] = React.useState([-1,-1]); // -1 indicates no selection
+  const [point1, setPoint1] = React.useState<[number, number]>([-1, -1]); // -1 indicates no selection
   const history = useHistory();
 
   React.useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = window.setTimeout(() => {
       // auto switches to false for the next pairing
       setSwapClear(false);
-    }, 200)
+    }, 200);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
   }, [swapClear]);
 
   React.useEffect(() => {
     updateLocalStorage();
-  }, [gameBoard]);
+  }, [gameBoard, gameName]);
 
   const updateLocalStorage = () => {
     if (gameName && gameBoard) {
       const newGameStatus = {
         gameName: gameName,
         gameBoard: gameBoard,
-      }
+      };
       window.localStorage.setItem('color-swap-game', JSON.stringify(newGameStatus));
     }
-  }
+  };
 
   const initGame = () => {
-    const savedGame = JSON.parse(window.localStorage.getItem('color-swap-game'));
+    const savedGameRaw = window.localStorage.getItem('color-swap-game');
+    const savedGame = savedGameRaw ? JSON.parse(savedGameRaw) : null;
+
     if (savedGame && savedGame.gameName && savedGame.gameBoard) {
       setGameName(savedGame.gameName);
       setGameBoard(savedGame.gameBoard);
@@ -60,21 +76,24 @@ export const GameContextProvider = ({children}) => {
       setGameName(gameBoardsBase[randomIndex].name); 
       setGameBoard(useGameScramble(initGameBoard));
     }
-  }
+  };
 
-  const updateGameBoard = (x, y) => {
+  const updateGameBoard = (x: number, y: number) => {
+    if (!gameBoard) {
+      return;
+    }
+
     if (point1[0] === -1 && point1[1] === -1) {
       // set first point
       setPoint1([x, y]);
     } else if (point1[0] === x && point1[1] === y) {
       // unselect first point
-      point1[0] = -1;
-      point1[1] = -1;
+      setPoint1([-1, -1]);
     } else {
       // swap scenario
-      let currentBoard = [...gameBoard];
-      let point1Val = currentBoard[point1[0]][point1[1]];
-      let point2Val = currentBoard[x][y];
+      const currentBoard = [...gameBoard];
+      const point1Val = currentBoard[point1[0]][point1[1]];
+      const point2Val = currentBoard[x][y];
       
       if (point2Val.correctCoord[0] === point1[0] && point2Val.correctCoord[1] === point1[1]) {
         point2Val.isCorrect = true
@@ -94,8 +113,7 @@ export const GameContextProvider = ({children}) => {
       setGameBoard(currentBoard);
       setSwapClear(true);
 
-      point1[0] = -1;
-      point1[1] = -1;
+      setPoint1([-1, -1]);
     }
 
     const incorrectTiles = useCheckSolution(gameBoard);
@@ -105,7 +123,7 @@ export const GameContextProvider = ({children}) => {
     } else {
       console.log('incorrect tiles: ', incorrectTiles);
     }
-  }
+  };
 
   return (
     <GameContext.Provider
@@ -119,5 +137,5 @@ export const GameContextProvider = ({children}) => {
     >
       {children}
     </GameContext.Provider>
-  )
-}
+  );
+};

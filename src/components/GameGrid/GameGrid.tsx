@@ -5,12 +5,21 @@ import './game-grid.scss';
 
 const GameGrid = () => {
   const { gameBoard } = React.useContext(GameContext);
-
-  const _grid = React.createRef<HTMLDivElement>();
+  const gridRef = React.useRef<HTMLDivElement>(null);
 
   const onAccessibleKeyDown = (e: React.KeyboardEvent) => {
-    const allTiles = Array.from(_grid.current.getElementsByClassName('game-tile')) as HTMLButtonElement[];
+    const grid = gridRef.current;
+    if (!grid) {
+      return;
+    }
+
+    const allTiles = Array.from(grid.getElementsByClassName('game-tile')) as HTMLButtonElement[];
     const findCurrentFocusIndex = allTiles.findIndex(tile => tile === document.activeElement);
+
+    if (findCurrentFocusIndex === -1) {
+      return;
+    }
+
     const ycoord = findCurrentFocusIndex % 10;
     // Note: all of the keydown logic is dependent on the 9 x 10 grid. 
 
@@ -52,14 +61,14 @@ const GameGrid = () => {
         }
         break;
     }
-  }
+  };
 
   return (
     <>{gameBoard && 
       <div
         className="game-grid"
         onKeyDown={onAccessibleKeyDown}
-        ref={_grid}
+        ref={gridRef}
       >
         {gameBoard.map((column, cIndex) => {
           return (
@@ -79,7 +88,7 @@ const GameGrid = () => {
         })}
       </div>
     }</>
-  )
-}
+  );
+};
 
 export default GameGrid;

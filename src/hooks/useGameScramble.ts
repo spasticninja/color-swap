@@ -1,5 +1,7 @@
-const useGameScramble = (gameGrid) => {
-  let shuffledGrid = gameGrid; 
+import { tGameTile } from "../components/global";
+
+const useGameScramble = (gameGrid: tGameTile[][]): tGameTile[][] => {
+  const shuffledGrid = gameGrid;
   const xLength = shuffledGrid.length;
   const yLength = shuffledGrid[0].length;
 
@@ -17,7 +19,7 @@ const useGameScramble = (gameGrid) => {
           shuffledGrid[x][y].isCorrect = false;
         }
 
-        let temp = shuffledGrid[i][j];
+        const temp = shuffledGrid[i][j];
         shuffledGrid[i][j] = shuffledGrid[x][y];
         shuffledGrid[x][y] = temp;
       }
@@ -25,6 +27,6 @@ const useGameScramble = (gameGrid) => {
   }
 
   return shuffledGrid;
-}
+};
 
 export default useGameScramble;

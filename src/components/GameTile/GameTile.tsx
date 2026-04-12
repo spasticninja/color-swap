@@ -5,10 +5,10 @@ import { tGameTile } from '../global';
 import './game-tile.scss';
 
 type tGameTileProps = {
-  tile: tGameTile
-  xCoord: Number;
-  yCoord: Number;
-}
+  tile: tGameTile;
+  xCoord: number;
+  yCoord: number;
+};
 
 const GameTile = (props: tGameTileProps) => {
   const { tile, xCoord, yCoord } = props;
@@ -19,7 +19,7 @@ const GameTile = (props: tGameTileProps) => {
     if (isSelected) {
       setIsSelected(false);
     }
-  }, [swapClear])
+  }, [isSelected, swapClear]);
 
   const classes = classnames('game-tile', {
     'selected': isSelected,
@@ -27,10 +27,12 @@ const GameTile = (props: tGameTileProps) => {
   });
   const iconClass = classnames('open-tile', {
     'selected-icon': isSelected
-  })
+  });
 
   const onTileClick = () => {
-    if (tile.isLocked) { return false };
+    if (tile.isLocked) {
+      return;
+    }
 
     if (!isSelected) {
       updateGameBoard(xCoord, yCoord);

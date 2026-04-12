@@ -1,6 +1,6 @@
 import { tGameTile } from "../components/global";
 
-const useCheckSolution = (gameBoard:tGameTile[][]):Number => {
+const useCheckSolution = (gameBoard: tGameTile[][]): number => {
   let incorrectTiles = 0;
 
   for (let i = 0; i < gameBoard.length; i++) {
@@ -13,6 +13,6 @@ const useCheckSolution = (gameBoard:tGameTile[][]):Number => {
   }
 
   return incorrectTiles;
-}
+};
 
 export default useCheckSolution;
