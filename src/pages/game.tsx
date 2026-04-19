@@ -5,9 +5,12 @@ import GameGrid from '../components/GameGrid/GameGrid';
 import { useHistory, useParams } from "react-router-dom";
 
 const Game = () => {
-  const { canUndo, gameBoard, gameSlug, openGame, undoMove } = React.useContext(GameContext);
+  const { canUndo, gameBoard, gameSlug, openGame, showHint, undoMove } = React.useContext(GameContext);
   const history = useHistory();
   const { slug } = useParams<{ slug?: string }>();
+  const canShowHint = Boolean(gameBoard && gameBoard.some((column, x) => (
+    column.some((tile, y) => !tile.isLocked && (tile.correctCoord[0] !== x || tile.correctCoord[1] !== y))
+  )));
   
   React.useEffect(() => {
     if (slug) {
@@ -33,16 +36,29 @@ const Game = () => {
 
   React.useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (!(event.metaKey || event.ctrlKey) || event.key.toLowerCase() !== 'u') {
+      if (!(event.metaKey || event.ctrlKey)) {
         return;
       }
 
-      if (!canUndo) {
+      const shortcut = event.key.toLowerCase();
+      if (shortcut === 'u') {
+        if (!canUndo) {
+          return;
+        }
+
+        event.preventDefault();
+        undoMove();
         return;
       }
 
-      event.preventDefault();
-      undoMove();
+      if (shortcut === 'h') {
+        if (!canShowHint) {
+          return;
+        }
+
+        event.preventDefault();
+        showHint();
+      }
     };
 
     window.addEventListener('keydown', onKeyDown);
@@ -50,13 +66,13 @@ const Game = () => {
     return () => {
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [canUndo, undoMove]);
+  }, [canShowHint, canUndo, showHint, undoMove]);
 
   return (
-    <>
+    <main className="game-page">
       <TitleBar title="Color Swap" showTitle></TitleBar>
       <GameGrid></GameGrid>
-    </>
+    </main>
   );
 };
 

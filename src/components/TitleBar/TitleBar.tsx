@@ -9,11 +9,11 @@ export type tTitleBar = {
 
 const CopyButton = () => {
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(window.location.href)
+    navigator.clipboard.writeText(window.location.href);
   };
 
   return (
-    <button aria-label="Copy game link" onClick={copyToClipboard} type="button">
+    <button aria-label="Copy game link" className="title-action-button" onClick={copyToClipboard} title="Copy game link" type="button">
       <i className="fa-solid fa-paperclip"></i>
     </button>
   );
@@ -26,7 +26,7 @@ const HintButton = () => {
   )));
 
   return (
-    <button aria-label="Show hint" disabled={!hasMoves} onClick={showHint} type="button">
+    <button aria-label="Show hint" className="title-action-button" disabled={!hasMoves} onClick={showHint} title="Show hint" type="button">
       <i className="fa-solid fa-lightbulb"></i>
     </button>
   );
@@ -36,7 +36,7 @@ const UndoButton = () => {
   const { canUndo, undoMove } = React.useContext(GameContext);
 
   return (
-    <button aria-label="Undo move" disabled={!canUndo} onClick={undoMove} type="button">
+    <button aria-label="Undo move" className="title-action-button" disabled={!canUndo} onClick={undoMove} title="Undo move" type="button">
       <i className="fa-solid fa-rotate-left"></i>
     </button>
   );
@@ -45,19 +45,25 @@ const UndoButton = () => {
 const TitleBar = (props: tTitleBar) => {
   const {title, showTitle = false} = props;
   const { gameName } = React.useContext(GameContext);
+  const showGameName = showTitle && Boolean(gameName);
   
   return (
-    <h1>
-      {title}
-      {showTitle ? <>
-        <small>{gameName}</small>
+    <header className="title-bar">
+      <div>
+        <p className="title-bar-kicker">Color Logic Puzzle</p>
+        <h1 className="title-bar-heading">
+          {title}
+          {showGameName ? <small>{gameName}</small> : null}
+        </h1>
+      </div>
+      {showTitle ? (
         <span className="title-bar-actions">
           <UndoButton />
           <HintButton />
           <CopyButton />
         </span>
-      </> : <></>}
-    </h1>
+      ) : null}
+    </header>
   );
 };
 

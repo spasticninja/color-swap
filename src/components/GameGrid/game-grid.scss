@@ -3,7 +3,11 @@
 .game-grid {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
-  background-color: $color-white;
+  background: rgba(255, 249, 242, 0.92);
+  border: 1px solid rgba(137, 108, 104, 0.22);
+  border-radius: 26px;
+  box-shadow: 0 24px 40px rgba(82, 49, 39, 0.16);
+  overflow: hidden;
   height: min(calc(100dvh - 180px), 70rem);
 }
 

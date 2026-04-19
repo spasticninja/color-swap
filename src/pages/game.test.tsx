@@ -233,4 +233,78 @@ describe('Game', () => {
 
     expect(undoMove).not.toHaveBeenCalled();
   });
+
+  it('triggers hint from cmd/ctrl+h when a hint is available', () => {
+    const showHint = jest.fn();
+    useParams.mockReturnValue({});
+
+    render(
+      <GameContext.Provider
+        value={{
+          gameBoard: [[{
+            color: '#ffffff',
+            isCorrect: false,
+            isLocked: false,
+            correctCoord: [0, 1]
+          }]],
+          gameName: 'Summer Dream',
+          gameSlug: 'summer-dream',
+          swapClear: false,
+          hasSelectedTile: false,
+          canUndo: false,
+          selectedTile: null,
+          hintTiles: null,
+          updateGameBoard: () => {},
+          openGame: jest.fn<OpenGameResult, [string?]>(() => 'loaded'),
+          startNewGame: () => true,
+          clearSavedGame: () => {},
+          showHint,
+          undoMove: () => {}
+        }}
+      >
+        <Game />
+      </GameContext.Provider>
+    );
+
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'h', ctrlKey: true }));
+
+    expect(showHint).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not trigger hint from cmd/ctrl+h when no hint is available', () => {
+    const showHint = jest.fn();
+    useParams.mockReturnValue({});
+
+    render(
+      <GameContext.Provider
+        value={{
+          gameBoard: [[{
+            color: '#ffffff',
+            isCorrect: true,
+            isLocked: false,
+            correctCoord: [0, 0]
+          }]],
+          gameName: 'Summer Dream',
+          gameSlug: 'summer-dream',
+          swapClear: false,
+          hasSelectedTile: false,
+          canUndo: false,
+          selectedTile: null,
+          hintTiles: null,
+          updateGameBoard: () => {},
+          openGame: jest.fn<OpenGameResult, [string?]>(() => 'loaded'),
+          startNewGame: () => true,
+          clearSavedGame: () => {},
+          showHint,
+          undoMove: () => {}
+        }}
+      >
+        <Game />
+      </GameContext.Provider>
+    );
+
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'h', metaKey: true }));
+
+    expect(showHint).not.toHaveBeenCalled();
+  });
 });

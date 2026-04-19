@@ -34,13 +34,18 @@ const Home = () => {
   };
 
   return (
-    <>
+    <main className="panel-page home-page">
       <TitleBar title="Color Swap"></TitleBar>
-      <h2>Welcome to Color Swap!</h2>
-      <p>Rules are simple. Select one tile and then select a second to swap them. You can select the same tile again to unselect it. The tiles with the dots are unclickable and unswapable, but that's fine, they're already in the right place!</p>
-      <p>Have fun!</p>
-      <button onClick={startGame}>{hasSavedGame ? 'Continue playing' : 'Start a new game'}</button>
-    </>
+      <section className="panel-card intro-card">
+        <p className="panel-eyebrow">{hasSavedGame ? 'Puzzle in progress' : 'A quick browser puzzle'}</p>
+        <h2>Welcome to Color Swap!</h2>
+        <p>Swap two color tiles at a time until the full gradient locks back into place.</p>
+        <p>Select one tile, then another, and watch the palette snap toward the solution. Corner dots mark the fixed anchor tiles that cannot be moved.</p>
+        <div className="page-actions">
+          <button className="primary-action" onClick={startGame}>{hasSavedGame ? 'Continue playing' : 'Start a new game'}</button>
+        </div>
+      </section>
+    </main>
   );
 };
 
