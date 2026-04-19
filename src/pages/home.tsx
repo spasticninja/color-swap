@@ -1,6 +1,7 @@
 import * as React from 'react';
 import GameContext from '../context/gameContext';
 import TitleBar from '../components/TitleBar/TitleBar';
+import useCheckSolution from '../hooks/useCheckSolution';
 import { useHistory } from "react-router-dom";
 
 const STORAGE_KEY = 'color-swap-game';
@@ -11,7 +12,20 @@ const Home = () => {
   const [hasSavedGame, setHasSavedGame] = React.useState(false);
 
   React.useEffect(() => {
-    setHasSavedGame(Boolean(window.localStorage.getItem(STORAGE_KEY)));
+    const savedGameRaw = window.localStorage.getItem(STORAGE_KEY);
+    if (!savedGameRaw) {
+      setHasSavedGame(false);
+      return;
+    }
+
+    const savedGame = JSON.parse(savedGameRaw) as { gameBoard?: Parameters<typeof useCheckSolution>[0] };
+    if (savedGame.gameBoard && useCheckSolution(savedGame.gameBoard) === 0) {
+      window.localStorage.removeItem(STORAGE_KEY);
+      setHasSavedGame(false);
+      return;
+    }
+
+    setHasSavedGame(true);
   }, []);
 
   const startGame = () => {

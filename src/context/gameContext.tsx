@@ -16,6 +16,23 @@ type tSavedGame = {
 };
 
 type tOpenGameResult = 'loaded' | 'missing' | 'rejected';
+type tHintTiles = [[number, number], [number, number]] | null;
+
+const cloneGameBoard = (gameBoard: tGameTile[][]): tGameTile[][] => (
+  gameBoard.map(column => column.map(tile => ({
+    ...tile,
+    correctCoord: [...tile.correctCoord] as [number, number]
+  })))
+);
+
+const logIncorrectTiles = (gameBoard: tGameTile[][], history: ReturnType<typeof useHistory>) => {
+  const incorrectTiles = useCheckSolution(gameBoard);
+  if (incorrectTiles === 0) {
+    history.push('/win');
+  } else {
+    console.log('incorrect tiles: ', incorrectTiles);
+  }
+};
 
 type tGameContext = {
   gameBoard?: tGameTile[][];
@@ -23,11 +40,15 @@ type tGameContext = {
   gameSlug: string;
   swapClear: boolean;
   hasSelectedTile: boolean;
+  canUndo: boolean;
   selectedTile: [number, number] | null;
+  hintTiles: tHintTiles;
   updateGameBoard: (x: number, y: number) => void;
   openGame: (slug?: string) => tOpenGameResult;
   startNewGame: (slug?: string) => boolean;
   clearSavedGame: () => void;
+  showHint: () => void;
+  undoMove: () => void;
 };
 
 const GameContext = React.createContext<tGameContext>({
@@ -36,11 +57,15 @@ const GameContext = React.createContext<tGameContext>({
   gameSlug: '',
   swapClear: false,
   hasSelectedTile: false,
+  canUndo: false,
   selectedTile: null,
+  hintTiles: null,
   updateGameBoard: () => {},
   openGame: () => 'loaded',
   startNewGame: () => false,
-  clearSavedGame: () => {}
+  clearSavedGame: () => {},
+  showHint: () => {},
+  undoMove: () => {}
 });
 
 export default GameContext;
@@ -55,8 +80,11 @@ export const GameContextProvider = ({ children }: GameContextProviderProps) => {
   const [gameSlug, setGameSlug] = React.useState('');
   const [swapClear, setSwapClear] = React.useState(false);
   const [point1, setPoint1] = React.useState<[number, number]>([-1, -1]); // -1 indicates no selection
+  const [hintTiles, setHintTiles] = React.useState<tHintTiles>(null);
+  const [undoBoard, setUndoBoard] = React.useState<tGameTile[][] | null>(null);
   const history = useHistory();
   const hasSelectedTile = point1[0] !== -1 && point1[1] !== -1;
+  const canUndo = Boolean(undoBoard);
 
   React.useEffect(() => {
     const timeoutId = window.setTimeout(() => {
@@ -80,6 +108,11 @@ export const GameContextProvider = ({ children }: GameContextProviderProps) => {
   const clearActiveSelection = () => {
     setPoint1([-1, -1]);
     setSwapClear(false);
+    setHintTiles(null);
+  };
+
+  const resetUndoState = () => {
+    setUndoBoard(null);
   };
 
   const readSavedGame = (): tSavedGame | null => {
@@ -107,11 +140,30 @@ export const GameContextProvider = ({ children }: GameContextProviderProps) => {
     }
   };
 
+  const showHint = () => {
+    if (!gameBoard) {
+      return;
+    }
+
+    for (let x = 0; x < gameBoard.length; x++) {
+      for (let y = 0; y < gameBoard[x].length; y++) {
+        const tile = gameBoard[x][y];
+        if (!tile.isLocked && (tile.correctCoord[0] !== x || tile.correctCoord[1] !== y)) {
+          setHintTiles([[x, y], tile.correctCoord]);
+          return;
+        }
+      }
+    }
+
+    setHintTiles(null);
+  };
+
   const loadSavedGame = (savedGame: tSavedGame) => {
     setGameName(savedGame.gameName);
     setGameSlug(savedGame.gameSlug);
-    setGameBoard(savedGame.gameBoard);
+    setGameBoard(cloneGameBoard(savedGame.gameBoard));
     clearActiveSelection();
+    resetUndoState();
   };
 
   const createNewGame = (slug?: string): boolean => {
@@ -127,6 +179,7 @@ export const GameContextProvider = ({ children }: GameContextProviderProps) => {
     setGameSlug(boardConfig.slug);
     setGameBoard(useGameScramble(initGameBoard));
     clearActiveSelection();
+    resetUndoState();
     return true;
   };
 
@@ -170,20 +223,37 @@ export const GameContextProvider = ({ children }: GameContextProviderProps) => {
     return createNewGame(slug);
   };
 
+  const undoMove = () => {
+    if (!canUndo || !undoBoard) {
+      return;
+    }
+
+    const restoredBoard = cloneGameBoard(undoBoard);
+    setGameBoard(restoredBoard);
+    clearActiveSelection();
+    setUndoBoard(null);
+    logIncorrectTiles(restoredBoard, history);
+  };
+
   const updateGameBoard = (x: number, y: number) => {
     if (!gameBoard) {
       return;
     }
 
+    setHintTiles(null);
+
     if (point1[0] === -1 && point1[1] === -1) {
       // set first point
       setPoint1([x, y]);
+      return;
     } else if (point1[0] === x && point1[1] === y) {
       // unselect first point
       setPoint1([-1, -1]);
+      return;
     } else {
       // swap scenario
-      const currentBoard = [...gameBoard];
+      const currentBoard = cloneGameBoard(gameBoard);
+      setUndoBoard(cloneGameBoard(gameBoard));
       const point1Val = currentBoard[point1[0]][point1[1]];
       const point2Val = currentBoard[x][y];
       
@@ -204,16 +274,8 @@ export const GameContextProvider = ({ children }: GameContextProviderProps) => {
 
       setGameBoard(currentBoard);
       setSwapClear(true);
-
-      setPoint1([-1, -1]);
-    }
-
-    const incorrectTiles = useCheckSolution(gameBoard);
-    if (incorrectTiles === 0) {
-      // winning condition
-      history.push('/win');
-    } else {
-      console.log('incorrect tiles: ', incorrectTiles);
+      clearActiveSelection();
+      logIncorrectTiles(currentBoard, history);
     }
   };
 
@@ -225,11 +287,15 @@ export const GameContextProvider = ({ children }: GameContextProviderProps) => {
         gameSlug,
         swapClear,
         hasSelectedTile,
+        canUndo,
         selectedTile: hasSelectedTile ? point1 : null,
+        hintTiles,
         updateGameBoard,
         openGame,
         startNewGame,
-        clearSavedGame
+        clearSavedGame,
+        showHint,
+        undoMove
       }}
     >
       {children}

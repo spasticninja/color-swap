@@ -20,11 +20,15 @@ describe('GameTile', () => {
           gameSlug: '',
           swapClear: false,
           hasSelectedTile: true,
+          canUndo: false,
           selectedTile: [0, 0],
+          hintTiles: null,
           updateGameBoard: () => {},
           openGame: () => 'loaded',
           startNewGame: () => true,
-          clearSavedGame: () => {}
+          clearSavedGame: () => {},
+          showHint: () => {},
+          undoMove: () => {}
         }}
       >
         <GameTile tile={tile} xCoord={0} yCoord={0} />
@@ -44,11 +48,15 @@ describe('GameTile', () => {
           gameSlug: '',
           swapClear: false,
           hasSelectedTile: true,
+          canUndo: false,
           selectedTile: [1, 1],
+          hintTiles: null,
           updateGameBoard: () => {},
           openGame: () => 'loaded',
           startNewGame: () => true,
-          clearSavedGame: () => {}
+          clearSavedGame: () => {},
+          showHint: () => {},
+          undoMove: () => {}
         }}
       >
         <GameTile tile={tile} xCoord={0} yCoord={0} />
@@ -70,11 +78,15 @@ describe('GameTile', () => {
           gameSlug: '',
           swapClear: false,
           hasSelectedTile: false,
+          canUndo: false,
           selectedTile: null,
+          hintTiles: null,
           updateGameBoard,
           openGame: () => 'loaded',
           startNewGame: () => true,
-          clearSavedGame: () => {}
+          clearSavedGame: () => {},
+          showHint: () => {},
+          undoMove: () => {}
         }}
       >
         <GameTile tile={tile} xCoord={2} yCoord={3} />
@@ -84,5 +96,32 @@ describe('GameTile', () => {
     fireEvent.click(screen.getByRole('button'));
 
     expect(updateGameBoard).toHaveBeenCalledWith(2, 3);
+  });
+
+  it('adds a red hint outline to hinted tiles', () => {
+    render(
+      <GameContext.Provider
+        value={{
+          gameBoard: undefined,
+          gameName: '',
+          gameSlug: '',
+          swapClear: false,
+          hasSelectedTile: false,
+          canUndo: false,
+          selectedTile: null,
+          hintTiles: [[2, 3], [4, 5]],
+          updateGameBoard: () => {},
+          openGame: () => 'loaded',
+          startNewGame: () => true,
+          clearSavedGame: () => {},
+          showHint: () => {},
+          undoMove: () => {}
+        }}
+      >
+        <GameTile tile={tile} xCoord={2} yCoord={3} />
+      </GameContext.Provider>
+    );
+
+    expect(screen.getByRole('button')).toHaveClass('hinted');
   });
 });

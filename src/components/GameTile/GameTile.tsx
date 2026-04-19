@@ -12,10 +12,12 @@ type tGameTileProps = {
 
 const GameTile = (props: tGameTileProps) => {
   const { tile, xCoord, yCoord } = props;
-  const { hasSelectedTile, selectedTile, updateGameBoard } = React.useContext(GameContext);
+  const { hasSelectedTile, hintTiles, selectedTile, updateGameBoard } = React.useContext(GameContext);
   const isSelected = selectedTile?.[0] === xCoord && selectedTile?.[1] === yCoord;
+  const isHinted = Boolean(hintTiles?.some(([hintX, hintY]) => hintX === xCoord && hintY === yCoord));
 
   const classes = classnames('game-tile', {
+    'hinted': isHinted,
     'selected': isSelected,
     'locked': tile.isLocked,
     'swap-ready': hasSelectedTile && !isSelected

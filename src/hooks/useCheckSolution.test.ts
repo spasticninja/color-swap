@@ -11,8 +11,8 @@ const createTile = (isCorrect: boolean, x: number, y: number): tGameTile => ({
 describe('useCheckSolution', () => {
   it('counts incorrect tiles in the board', () => {
     const gameBoard = [
-      [createTile(true, 0, 0), createTile(false, 0, 1)],
-      [createTile(false, 1, 0), createTile(true, 1, 1)]
+      [createTile(true, 0, 0), createTile(false, 1, 0)],
+      [createTile(false, 0, 1), createTile(true, 1, 1)]
     ];
 
     expect(useCheckSolution(gameBoard)).toBe(2);
@@ -25,5 +25,14 @@ describe('useCheckSolution', () => {
     ];
 
     expect(useCheckSolution(gameBoard)).toBe(0);
+  });
+
+  it('uses tile coordinates instead of stale isCorrect flags', () => {
+    const gameBoard = [
+      [createTile(true, 0, 0), createTile(true, 0, 1)],
+      [createTile(true, 1, 1), createTile(true, 1, 0)]
+    ];
+
+    expect(useCheckSolution(gameBoard)).toBe(2);
   });
 });

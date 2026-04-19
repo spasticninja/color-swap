@@ -32,11 +32,15 @@ describe('Game', () => {
           gameSlug: '',
           swapClear: false,
           hasSelectedTile: false,
+          canUndo: false,
           selectedTile: null,
+          hintTiles: null,
           updateGameBoard: () => {},
           openGame,
           startNewGame: () => true,
-          clearSavedGame: () => {}
+          clearSavedGame: () => {},
+          showHint: () => {},
+          undoMove: () => {}
         }}
       >
         <Game />
@@ -57,11 +61,15 @@ describe('Game', () => {
           gameSlug: 'summer-dream',
           swapClear: false,
           hasSelectedTile: false,
+          canUndo: false,
           selectedTile: null,
+          hintTiles: null,
           updateGameBoard: () => {},
           openGame: jest.fn<OpenGameResult, [string?]>(() => 'loaded'),
           startNewGame: () => true,
-          clearSavedGame: () => {}
+          clearSavedGame: () => {},
+          showHint: () => {},
+          undoMove: () => {}
         }}
       >
         <Game />
@@ -83,11 +91,15 @@ describe('Game', () => {
           gameSlug: '',
           swapClear: false,
           hasSelectedTile: false,
+          canUndo: false,
           selectedTile: null,
+          hintTiles: null,
           updateGameBoard: () => {},
           openGame,
           startNewGame: () => true,
-          clearSavedGame: () => {}
+          clearSavedGame: () => {},
+          showHint: () => {},
+          undoMove: () => {}
         }}
       >
         <Game />
@@ -110,11 +122,15 @@ describe('Game', () => {
           gameSlug: '',
           swapClear: false,
           hasSelectedTile: false,
+          canUndo: false,
           selectedTile: null,
+          hintTiles: null,
           updateGameBoard: () => {},
           openGame,
           startNewGame: () => true,
-          clearSavedGame: () => {}
+          clearSavedGame: () => {},
+          showHint: () => {},
+          undoMove: () => {}
         }}
       >
         <Game />
@@ -136,11 +152,15 @@ describe('Game', () => {
           gameSlug: '',
           swapClear: false,
           hasSelectedTile: false,
+          canUndo: false,
           selectedTile: null,
+          hintTiles: null,
           updateGameBoard: () => {},
           openGame,
           startNewGame: () => true,
-          clearSavedGame: () => {}
+          clearSavedGame: () => {},
+          showHint: () => {},
+          undoMove: () => {}
         }}
       >
         <Game />
@@ -148,5 +168,69 @@ describe('Game', () => {
     );
 
     expect(replace).toHaveBeenCalledWith('/');
+  });
+
+  it('triggers undo from cmd/ctrl+u when undo is available', () => {
+    const undoMove = jest.fn();
+    useParams.mockReturnValue({});
+
+    render(
+      <GameContext.Provider
+        value={{
+          gameBoard: [[]],
+          gameName: 'Summer Dream',
+          gameSlug: 'summer-dream',
+          swapClear: false,
+          hasSelectedTile: false,
+          canUndo: true,
+          selectedTile: null,
+          hintTiles: null,
+          updateGameBoard: () => {},
+          openGame: jest.fn<OpenGameResult, [string?]>(() => 'loaded'),
+          startNewGame: () => true,
+          clearSavedGame: () => {},
+          showHint: () => {},
+          undoMove
+        }}
+      >
+        <Game />
+      </GameContext.Provider>
+    );
+
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'u', ctrlKey: true }));
+
+    expect(undoMove).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not trigger undo from cmd/ctrl+u when undo is disabled', () => {
+    const undoMove = jest.fn();
+    useParams.mockReturnValue({});
+
+    render(
+      <GameContext.Provider
+        value={{
+          gameBoard: [[]],
+          gameName: 'Summer Dream',
+          gameSlug: 'summer-dream',
+          swapClear: false,
+          hasSelectedTile: false,
+          canUndo: false,
+          selectedTile: null,
+          hintTiles: null,
+          updateGameBoard: () => {},
+          openGame: jest.fn<OpenGameResult, [string?]>(() => 'loaded'),
+          startNewGame: () => true,
+          clearSavedGame: () => {},
+          showHint: () => {},
+          undoMove
+        }}
+      >
+        <Game />
+      </GameContext.Provider>
+    );
+
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'u', metaKey: true }));
+
+    expect(undoMove).not.toHaveBeenCalled();
   });
 });

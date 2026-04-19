@@ -15,31 +15,6 @@ describe('Win', () => {
     push.mockClear();
   });
 
-  it('clears the saved game when the win screen loads', () => {
-    const clearSavedGame = jest.fn();
-
-    render(
-      <GameContext.Provider
-        value={{
-          gameBoard: undefined,
-          gameName: 'Solved Puzzle',
-          gameSlug: 'solved-puzzle',
-          swapClear: false,
-          hasSelectedTile: false,
-          selectedTile: null,
-          updateGameBoard: () => {},
-          openGame: () => 'loaded',
-          startNewGame: () => true,
-          clearSavedGame
-        }}
-      >
-        <Win />
-      </GameContext.Provider>
-    );
-
-    expect(clearSavedGame).toHaveBeenCalledTimes(1);
-  });
-
   it('starts a fresh game from the win screen', () => {
     const startNewGame = jest.fn();
 
@@ -51,11 +26,15 @@ describe('Win', () => {
           gameSlug: 'solved-puzzle',
           swapClear: false,
           hasSelectedTile: false,
+          canUndo: false,
           selectedTile: null,
+          hintTiles: null,
           updateGameBoard: () => {},
           openGame: () => 'loaded',
           startNewGame,
-          clearSavedGame: () => {}
+          clearSavedGame: () => {},
+          showHint: () => {},
+          undoMove: () => {}
         }}
       >
         <Win />

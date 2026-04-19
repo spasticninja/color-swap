@@ -9,4 +9,23 @@ h1 {
     display: block;
     color: $color-grey;
   }
+
+  .title-bar-actions {
+    display: inline-flex;
+    gap: .5rem;
+    margin-top: .75rem;
+  }
+
+  button {
+    border: 1px solid $color-black;
+    background: $color-white;
+    color: $color-black;
+    padding: .45rem .65rem;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+    }
+  }
 }

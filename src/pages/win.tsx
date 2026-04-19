@@ -4,12 +4,8 @@ import TitleBar from '../components/TitleBar/TitleBar';
 import { useHistory } from "react-router-dom";
 
 const Win = () => {
-  const { clearSavedGame, gameName, startNewGame } = React.useContext(GameContext);
+  const { gameName, startNewGame } = React.useContext(GameContext);
   const history = useHistory();
-
-  React.useEffect(() => {
-    clearSavedGame();
-  }, [clearSavedGame]);
 
   const onNewGame = () => {
     startNewGame();
@@ -21,8 +17,10 @@ const Win = () => {
       <TitleBar title="Color Swap"></TitleBar>
       <h2>Congratulations!</h2>
       <p>You solved "{gameName}".</p>
-      <p>This game was created by SpasticNinja. Feel free to checkout the <a href="https://github.com/spasticninja/color-swap" rel="nofollow noopener" target="_blank">code behind this project!</a></p>
       <button onClick={onNewGame}>Try another puzzle</button>
+      <div className="footer">
+        <p>This game was created by SpasticNinja. Feel free to checkout the <a href="https://github.com/spasticninja/color-swap" rel="nofollow noopener" target="_blank">code behind this project!</a></p>
+      </div>
     </>
   );
 };

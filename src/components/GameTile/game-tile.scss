@@ -23,6 +23,11 @@
     transform: scale(1.03);
   }
 
+  &.hinted {
+    border-color: #d72638;
+    box-shadow: inset 0 0 0 2px rgba(#d72638, .4);
+  }
+
   .lock-icon {
     position: absolute;
     top: 50%;
