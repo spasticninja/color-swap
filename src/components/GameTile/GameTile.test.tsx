@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import { defaultGameSizeOption } from '../../config/gameOptions';
 import GameTile from './GameTile';
 import GameContext from '../../context/gameContext';
 import { tGameTile } from '../global';
@@ -18,6 +19,7 @@ describe('GameTile', () => {
           gameBoard: undefined,
           gameName: '',
           gameSlug: '',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: true,
           canUndo: false,
@@ -26,6 +28,7 @@ describe('GameTile', () => {
           updateGameBoard: () => {},
           openGame: () => 'loaded',
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -46,6 +49,7 @@ describe('GameTile', () => {
           gameBoard: undefined,
           gameName: '',
           gameSlug: '',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: true,
           canUndo: false,
@@ -54,6 +58,7 @@ describe('GameTile', () => {
           updateGameBoard: () => {},
           openGame: () => 'loaded',
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -76,6 +81,7 @@ describe('GameTile', () => {
           gameBoard: undefined,
           gameName: '',
           gameSlug: '',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -84,6 +90,7 @@ describe('GameTile', () => {
           updateGameBoard,
           openGame: () => 'loaded',
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -105,6 +112,7 @@ describe('GameTile', () => {
           gameBoard: undefined,
           gameName: '',
           gameSlug: '',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -113,6 +121,7 @@ describe('GameTile', () => {
           updateGameBoard: () => {},
           openGame: () => 'loaded',
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}

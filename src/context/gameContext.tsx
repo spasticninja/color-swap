@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { getGameBoardBySlug, getRandomGameBoard } from '../../data/game-boards';
+import { defaultGameSizeOption, getGameSizeOption, tBoardSizeOption } from '../config/gameOptions';
 import useGenerateBoard from '../hooks/useGenerateBoard';
 import useGameScramble from '../hooks/useGameScramble';
 import useCheckSolution from '../hooks/useCheckSolution';
@@ -38,6 +39,7 @@ type tGameContext = {
   gameBoard?: tGameTile[][];
   gameName: string;
   gameSlug: string;
+  boardSize: tBoardSizeOption;
   swapClear: boolean;
   hasSelectedTile: boolean;
   canUndo: boolean;
@@ -46,6 +48,7 @@ type tGameContext = {
   updateGameBoard: (x: number, y: number) => void;
   openGame: (slug?: string) => tOpenGameResult;
   startNewGame: (slug?: string) => boolean;
+  setBoardSize: (boardSize: tBoardSizeOption) => void;
   clearSavedGame: () => void;
   showHint: () => void;
   undoMove: () => void;
@@ -55,6 +58,7 @@ const GameContext = React.createContext<tGameContext>({
   gameBoard: undefined,
   gameName: '',
   gameSlug: '',
+  boardSize: defaultGameSizeOption,
   swapClear: false,
   hasSelectedTile: false,
   canUndo: false,
@@ -63,6 +67,7 @@ const GameContext = React.createContext<tGameContext>({
   updateGameBoard: () => {},
   openGame: () => 'loaded',
   startNewGame: () => false,
+  setBoardSize: () => {},
   clearSavedGame: () => {},
   showHint: () => {},
   undoMove: () => {}
@@ -78,6 +83,7 @@ export const GameContextProvider = ({ children }: GameContextProviderProps) => {
   const [gameBoard, setGameBoard] = React.useState<tGameTile[][] | undefined>();
   const [gameName, setGameName] = React.useState('');
   const [gameSlug, setGameSlug] = React.useState('');
+  const [boardSize, setBoardSize] = React.useState<tBoardSizeOption>(defaultGameSizeOption);
   const [swapClear, setSwapClear] = React.useState(false);
   const [point1, setPoint1] = React.useState<[number, number]>([-1, -1]); // -1 indicates no selection
   const [hintTiles, setHintTiles] = React.useState<tHintTiles>(null);
@@ -162,6 +168,7 @@ export const GameContextProvider = ({ children }: GameContextProviderProps) => {
     setGameName(savedGame.gameName);
     setGameSlug(savedGame.gameSlug);
     setGameBoard(cloneGameBoard(savedGame.gameBoard));
+    setBoardSize(getGameSizeOption(savedGame.gameBoard.length, savedGame.gameBoard[0].length));
     clearActiveSelection();
     resetUndoState();
   };
@@ -172,8 +179,7 @@ export const GameContextProvider = ({ children }: GameContextProviderProps) => {
       return false;
     }
 
-    const initGameBoard = useGenerateBoard(boardConfig.colors, 9, 10);
-    // TODO: difficulty mode via game board size
+    const initGameBoard = useGenerateBoard(boardConfig.colors, boardSize.width, boardSize.height);
 
     setGameName(boardConfig.name);
     setGameSlug(boardConfig.slug);
@@ -285,6 +291,7 @@ export const GameContextProvider = ({ children }: GameContextProviderProps) => {
         gameBoard,
         gameName,
         gameSlug,
+        boardSize,
         swapClear,
         hasSelectedTile,
         canUndo,
@@ -293,6 +300,7 @@ export const GameContextProvider = ({ children }: GameContextProviderProps) => {
         updateGameBoard,
         openGame,
         startNewGame,
+        setBoardSize,
         clearSavedGame,
         showHint,
         undoMove

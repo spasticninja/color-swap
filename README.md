@@ -24,11 +24,10 @@ A react color tile swap game! Inspired by Color Puzzle and I Love Hue.
 * [x] Hints
 * [ ] Add streak counter
 * [x] Start screen will either randomly select game on intial start or allow them to continue playing (if game in localStorage)
-* [ ] win screen love - make prettier and linkable?
-* [ ] share & next game selection
+* [x] win screen love - make prettier and linkable?
+* [x] share & next game selection
 * [ ] allow for different difficulties (game size?)
-* [ ] Make pre-determined games so we can link to different ones?
-* [ ] Come up with a better way to ensure the four starting colors are far enough apart. This distance (and game board size) can determine difficulty.
+* [x] Make pre-determined games so we can link to different ones?
 
 ## Credits
 1. Icons: [IconMonstr](https://iconmonstr.com)

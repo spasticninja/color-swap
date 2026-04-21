@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react';
+import { defaultGameSizeOption } from '../config/gameOptions';
 import Game from './game';
 import GameContext from '../context/gameContext';
 
@@ -30,6 +31,7 @@ describe('Game', () => {
           gameBoard: undefined,
           gameName: '',
           gameSlug: '',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -38,6 +40,7 @@ describe('Game', () => {
           updateGameBoard: () => {},
           openGame,
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -59,6 +62,7 @@ describe('Game', () => {
           gameBoard: [[]],
           gameName: 'Summer Dream',
           gameSlug: 'summer-dream',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -67,6 +71,7 @@ describe('Game', () => {
           updateGameBoard: () => {},
           openGame: jest.fn<OpenGameResult, [string?]>(() => 'loaded'),
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -89,6 +94,7 @@ describe('Game', () => {
           gameBoard: undefined,
           gameName: '',
           gameSlug: '',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -97,6 +103,7 @@ describe('Game', () => {
           updateGameBoard: () => {},
           openGame,
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -120,6 +127,7 @@ describe('Game', () => {
           gameBoard: undefined,
           gameName: '',
           gameSlug: '',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -128,6 +136,7 @@ describe('Game', () => {
           updateGameBoard: () => {},
           openGame,
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -150,6 +159,7 @@ describe('Game', () => {
           gameBoard: undefined,
           gameName: '',
           gameSlug: '',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -158,6 +168,7 @@ describe('Game', () => {
           updateGameBoard: () => {},
           openGame,
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -180,6 +191,7 @@ describe('Game', () => {
           gameBoard: [[]],
           gameName: 'Summer Dream',
           gameSlug: 'summer-dream',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: true,
@@ -188,6 +200,7 @@ describe('Game', () => {
           updateGameBoard: () => {},
           openGame: jest.fn<OpenGameResult, [string?]>(() => 'loaded'),
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove
@@ -212,6 +225,7 @@ describe('Game', () => {
           gameBoard: [[]],
           gameName: 'Summer Dream',
           gameSlug: 'summer-dream',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -220,6 +234,7 @@ describe('Game', () => {
           updateGameBoard: () => {},
           openGame: jest.fn<OpenGameResult, [string?]>(() => 'loaded'),
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove
@@ -249,6 +264,7 @@ describe('Game', () => {
           }]],
           gameName: 'Summer Dream',
           gameSlug: 'summer-dream',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -257,6 +273,7 @@ describe('Game', () => {
           updateGameBoard: () => {},
           openGame: jest.fn<OpenGameResult, [string?]>(() => 'loaded'),
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint,
           undoMove: () => {}
@@ -286,6 +303,7 @@ describe('Game', () => {
           }]],
           gameName: 'Summer Dream',
           gameSlug: 'summer-dream',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -294,6 +312,7 @@ describe('Game', () => {
           updateGameBoard: () => {},
           openGame: jest.fn<OpenGameResult, [string?]>(() => 'loaded'),
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint,
           undoMove: () => {}

@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { getGameBoardBySlug } from '../../../data/game-boards';
+import { getBoardDifficulty } from '../../utils/getBoardDifficulty';
 import GameContext from '../../context/gameContext';
 import './title-bar.scss';
 
@@ -44,8 +46,32 @@ const UndoButton = () => {
 
 const TitleBar = (props: tTitleBar) => {
   const {title, showTitle = false} = props;
-  const { gameName } = React.useContext(GameContext);
+  const { boardSize, gameName, gameSlug } = React.useContext(GameContext);
   const showGameName = showTitle && Boolean(gameName);
+  const difficultyLabel = React.useMemo(() => {
+    if (!showGameName || !gameSlug) {
+      return null;
+    }
+
+    const boardConfig = getGameBoardBySlug(gameSlug);
+    if (!boardConfig) {
+      return null;
+    }
+
+    const { tier } = getBoardDifficulty(boardConfig, boardSize);
+    switch (tier) {
+      case 'easy':
+        return 'Easy';
+      case 'medium':
+        return 'Intermediate';
+      case 'hard':
+        return 'Hard';
+      case 'expert':
+        return 'Expert';
+      default:
+        return null;
+    }
+  }, [boardSize, gameSlug, showGameName]);
   
   return (
     <header className="title-bar">
@@ -53,7 +79,12 @@ const TitleBar = (props: tTitleBar) => {
         <p className="title-bar-kicker">Color Logic Puzzle</p>
         <h1 className="title-bar-heading">
           {title}
-          {showGameName ? <small>{gameName}</small> : null}
+          {showGameName ? (
+            <small>
+              <span>{gameName}</span>
+              {difficultyLabel ? <span className="title-bar-difficulty">{difficultyLabel}</span> : null}
+            </small>
+          ) : null}
         </h1>
       </div>
       {showTitle ? (

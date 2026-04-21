@@ -6,10 +6,12 @@ import './game-grid.scss';
 const GameGrid = () => {
   const { gameBoard } = React.useContext(GameContext);
   const gridRef = React.useRef<HTMLDivElement>(null);
+  const columnCount = gameBoard?.length ?? 0;
+  const rowCount = gameBoard?.[0]?.length ?? 0;
 
   const onAccessibleKeyDown = (e: React.KeyboardEvent) => {
     const grid = gridRef.current;
-    if (!grid) {
+    if (!grid || !columnCount || !rowCount) {
       return;
     }
 
@@ -20,42 +22,38 @@ const GameGrid = () => {
       return;
     }
 
-    const ycoord = findCurrentFocusIndex % 10;
-    // Note: all of the keydown logic is dependent on the 9 x 10 grid. 
+    const columnIndex = Math.floor(findCurrentFocusIndex / rowCount);
+    const rowIndex = findCurrentFocusIndex % rowCount;
 
     switch (e.key) {
       case 'ArrowLeft': 
         e.preventDefault();
-        if (findCurrentFocusIndex <= 10) {
-          // need to go last column
-          allTiles[80 + ycoord].focus();
+        if (columnIndex === 0) {
+          allTiles[((columnCount - 1) * rowCount) + rowIndex].focus();
         } else {
-          allTiles[findCurrentFocusIndex - 10].focus();
+          allTiles[findCurrentFocusIndex - rowCount].focus();
         }
         break;
       case 'ArrowRight':
         e.preventDefault();
-        if (findCurrentFocusIndex > 80) {
-          // need to go back to column 1
-          allTiles[ycoord].focus();
+        if (columnIndex === columnCount - 1) {
+          allTiles[rowIndex].focus();
         } else {
-          allTiles[findCurrentFocusIndex + 10].focus();
+          allTiles[findCurrentFocusIndex + rowCount].focus();
         }
         break;
       case 'ArrowDown':
         e.preventDefault();
-        if (ycoord === 9) {
-          // need to go back to top
-          allTiles[findCurrentFocusIndex - 9].focus();
+        if (rowIndex === rowCount - 1) {
+          allTiles[findCurrentFocusIndex - (rowCount - 1)].focus();
         } else {
           allTiles[findCurrentFocusIndex + 1].focus();
         }
         break;
       case 'ArrowUp':
         e.preventDefault();
-        if (ycoord === 0) {
-          // need to go bottom
-          allTiles[findCurrentFocusIndex + 9].focus();
+        if (rowIndex === 0) {
+          allTiles[findCurrentFocusIndex + (rowCount - 1)].focus();
         } else {
           allTiles[findCurrentFocusIndex - 1].focus();
         }
@@ -69,10 +67,15 @@ const GameGrid = () => {
         className="game-grid"
         onKeyDown={onAccessibleKeyDown}
         ref={gridRef}
+        style={{ gridTemplateColumns: `repeat(${columnCount}, 1fr)` }}
       >
         {gameBoard.map((column, cIndex) => {
           return (
-            <div key={cIndex} className="game-grid-column">
+            <div
+              key={cIndex}
+              className="game-grid-column"
+              style={{ gridTemplateRows: `repeat(${column.length}, minmax(0, 1fr))` }}
+            >
               {column.map((tile, tIndex) => {
                 return (
                   <GameTile

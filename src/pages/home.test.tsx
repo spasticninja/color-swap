@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { defaultGameSizeOption } from '../config/gameOptions';
 import Home from './home';
 import GameContext from '../context/gameContext';
 import { tGameTile } from '../components/global';
@@ -35,6 +36,7 @@ describe('Home', () => {
           gameBoard: undefined,
           gameName: '',
           gameSlug: '',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -43,6 +45,7 @@ describe('Home', () => {
           updateGameBoard: () => {},
           openGame: () => 'loaded',
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -53,6 +56,8 @@ describe('Home', () => {
     );
 
     expect(screen.getByRole('button', { name: 'Start a new game' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: '6 x 6' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: '9 x 10' })).toHaveAttribute('aria-checked', 'true');
   });
 
   it('shows a continue label when a saved game exists', () => {
@@ -68,6 +73,7 @@ describe('Home', () => {
           gameBoard: undefined,
           gameName: '',
           gameSlug: '',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -76,6 +82,7 @@ describe('Home', () => {
           updateGameBoard: () => {},
           openGame: () => 'loaded',
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -86,6 +93,7 @@ describe('Home', () => {
     );
 
     expect(screen.getByRole('button', { name: 'Continue playing' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Start a new game' })).toBeInTheDocument();
   });
 
   it('clears solved games when landing on the root url', () => {
@@ -101,6 +109,7 @@ describe('Home', () => {
           gameBoard: undefined,
           gameName: '',
           gameSlug: '',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -109,6 +118,7 @@ describe('Home', () => {
           updateGameBoard: () => {},
           openGame: () => 'loaded',
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}

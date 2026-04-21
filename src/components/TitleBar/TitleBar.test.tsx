@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import { defaultGameSizeOption } from '../../config/gameOptions';
 import TitleBar from './TitleBar';
 import GameContext from '../../context/gameContext';
 
@@ -10,6 +11,7 @@ describe('TitleBar', () => {
           gameBoard: undefined,
           gameName: 'Ignored Puzzle',
           gameSlug: 'ignored-puzzle',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -18,6 +20,7 @@ describe('TitleBar', () => {
           updateGameBoard: () => {},
           openGame: () => 'loaded',
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -43,6 +46,7 @@ describe('TitleBar', () => {
           }]],
           gameName: 'Four deep colors',
           gameSlug: 'four-deep-colors',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -51,6 +55,7 @@ describe('TitleBar', () => {
           updateGameBoard: () => {},
           openGame: () => 'loaded',
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -61,6 +66,7 @@ describe('TitleBar', () => {
     );
 
     expect(screen.getByText('Four deep colors')).toBeInTheDocument();
+    expect(screen.getByText(/easy|intermediate|hard|expert/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Undo move' })).toBeDisabled();
     expect(screen.getByRole('button', { name: 'Show hint' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Copy game link' })).toBeInTheDocument();
@@ -80,6 +86,7 @@ describe('TitleBar', () => {
           }]],
           gameName: 'Four deep colors',
           gameSlug: 'four-deep-colors',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -88,6 +95,7 @@ describe('TitleBar', () => {
           updateGameBoard: () => {},
           openGame: () => 'loaded',
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint,
           undoMove: () => {}
@@ -116,6 +124,7 @@ describe('TitleBar', () => {
           }]],
           gameName: 'Four deep colors',
           gameSlug: 'four-deep-colors',
+          boardSize: defaultGameSizeOption,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: true,
@@ -124,6 +133,7 @@ describe('TitleBar', () => {
           updateGameBoard: () => {},
           openGame: () => 'loaded',
           startNewGame: () => true,
+          setBoardSize: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove
