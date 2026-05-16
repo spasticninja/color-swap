@@ -54,6 +54,18 @@
 - Shared links should preserve the slug in the URL.
 - Specific puzzle links should use `/game/{slug}`.
 
+## Release Versioning
+- Current release line should use semver tags like `v2.1.0`.
+- Treat the package version and git tag as a matched release pair.
+- Use a `major` bump for breaking changes or a substantial relaunch.
+- Use a `minor` bump for player-facing features, new game flows, significant UI refreshes, or deployment/share improvements worth announcing.
+- Use a `patch` bump for bug fixes, tuning, accessibility fixes, CSS cleanup, SEO metadata fixes, and GitHub Pages/deployment fixes.
+- A commit is worth versioning when it leaves the game in a clearly releasable state, not just because it merges to `main`.
+- Before tagging a release, run:
+  - `npm test -- --runInBand`
+  - `npm run typecheck`
+  - `npm run build`
+
 ## Accessibility and Keyboard Features
 - Tiles are buttons.
 - Locked tiles are disabled buttons.
