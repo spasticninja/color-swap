@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { defaultGameSizeOption } from '../../config/gameOptions';
+import { defaultDifficultyPreference, defaultGameSizeOption } from '../../config/gameOptions';
 import GameTile from './GameTile';
 import GameContext from '../../context/gameContext';
 import { tGameTile } from '../global';
@@ -20,6 +20,7 @@ describe('GameTile', () => {
           gameName: '',
           gameSlug: '',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: true,
           canUndo: false,
@@ -29,6 +30,7 @@ describe('GameTile', () => {
           openGame: () => 'loaded',
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -50,6 +52,7 @@ describe('GameTile', () => {
           gameName: '',
           gameSlug: '',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: true,
           canUndo: false,
@@ -59,6 +62,7 @@ describe('GameTile', () => {
           openGame: () => 'loaded',
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -82,6 +86,7 @@ describe('GameTile', () => {
           gameName: '',
           gameSlug: '',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -91,6 +96,7 @@ describe('GameTile', () => {
           openGame: () => 'loaded',
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -113,6 +119,7 @@ describe('GameTile', () => {
           gameName: '',
           gameSlug: '',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -122,6 +129,7 @@ describe('GameTile', () => {
           openGame: () => 'loaded',
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}

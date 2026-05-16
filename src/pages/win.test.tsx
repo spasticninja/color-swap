@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { defaultGameSizeOption } from '../config/gameOptions';
+import { defaultDifficultyPreference, defaultGameSizeOption } from '../config/gameOptions';
 import Win from './win';
 import GameContext from '../context/gameContext';
 
@@ -26,6 +26,7 @@ describe('Win', () => {
           gameName: 'Solved Puzzle',
           gameSlug: 'solved-puzzle',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -35,6 +36,7 @@ describe('Win', () => {
           openGame: () => 'loaded',
           startNewGame,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}

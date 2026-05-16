@@ -46,6 +46,13 @@ describe('getBoardDifficulty', () => {
 
     expect(difficulty.breakdown.paletteScore).toBe(22);
     expect(difficulty.score).toBe(51);
-    expect(difficulty.tier).toBe('medium');
+    expect(difficulty.tier).toBe('expert');
+  });
+
+  it('maps the recalibrated score thresholds to all four tiers', () => {
+    expect(getBoardDifficulty(baseBoard({ difficultyScore: 0 }), { width: 6, height: 6 }).tier).toBe('easy');
+    expect(getBoardDifficulty(baseBoard({ difficultyScore: 13 }), { width: 7, height: 8 }).tier).toBe('medium');
+    expect(getBoardDifficulty(baseBoard({ difficultyScore: 17 }), { width: 8, height: 9 }).tier).toBe('hard');
+    expect(getBoardDifficulty(baseBoard({ difficultyScore: 17 }), { width: 9, height: 10 }).tier).toBe('expert');
   });
 });

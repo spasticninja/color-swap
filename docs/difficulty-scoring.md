@@ -58,10 +58,10 @@ This is based on the active board size when a game is played.
 
 The numeric score maps to the current difficulty tier thresholds:
 
-- `0-34`: `easy`
-- `35-59`: `medium`
-- `60-79`: `hard`
-- `80-100`: `expert`
+- `0-23`: `easy`
+- `24-35`: `medium`
+- `36-45`: `hard`
+- `46-100`: `expert`
 
 ## Important Note
 

@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { defaultGameSizeOption } from '../../config/gameOptions';
+import { defaultDifficultyPreference, defaultGameSizeOption } from '../../config/gameOptions';
 import TitleBar from './TitleBar';
 import GameContext from '../../context/gameContext';
 
@@ -12,6 +12,7 @@ describe('TitleBar', () => {
           gameName: 'Ignored Puzzle',
           gameSlug: 'ignored-puzzle',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -21,6 +22,7 @@ describe('TitleBar', () => {
           openGame: () => 'loaded',
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -47,6 +49,7 @@ describe('TitleBar', () => {
           gameName: 'Four deep colors',
           gameSlug: 'four-deep-colors',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -56,6 +59,7 @@ describe('TitleBar', () => {
           openGame: () => 'loaded',
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -87,6 +91,7 @@ describe('TitleBar', () => {
           gameName: 'Four deep colors',
           gameSlug: 'four-deep-colors',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -96,6 +101,7 @@ describe('TitleBar', () => {
           openGame: () => 'loaded',
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint,
           undoMove: () => {}
@@ -125,6 +131,7 @@ describe('TitleBar', () => {
           gameName: 'Four deep colors',
           gameSlug: 'four-deep-colors',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: true,
@@ -134,6 +141,7 @@ describe('TitleBar', () => {
           openGame: () => 'loaded',
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove

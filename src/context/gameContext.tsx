@@ -1,11 +1,18 @@
 import * as React from 'react';
-import { getGameBoardBySlug, getRandomGameBoard } from '../../data/game-boards';
-import { defaultGameSizeOption, getGameSizeOption, tBoardSizeOption } from '../config/gameOptions';
+import { getGameBoardBySlug } from '../../data/game-boards';
+import {
+  defaultDifficultyPreference,
+  defaultGameSizeOption,
+  getGameSizeOption,
+  tBoardSizeOption,
+  tDifficultyPreference
+} from '../config/gameOptions';
 import useGenerateBoard from '../hooks/useGenerateBoard';
 import useGameScramble from '../hooks/useGameScramble';
 import useCheckSolution from '../hooks/useCheckSolution';
 import { tGameTile } from '../components/global';
 import { useHistory } from "react-router-dom";
+import { getAvailableDifficultyTiers, getSelectableGameBoards } from '../utils/getSelectableGameBoards';
 
 const STORAGE_KEY = 'color-swap-game';
 const REPLACE_GAME_MESSAGE = 'You already have an unfinished game in progress. Do you want to switch to the shared game link? Your current game will be reset.';
@@ -40,6 +47,7 @@ type tGameContext = {
   gameName: string;
   gameSlug: string;
   boardSize: tBoardSizeOption;
+  difficultyPreference: tDifficultyPreference;
   swapClear: boolean;
   hasSelectedTile: boolean;
   canUndo: boolean;
@@ -49,6 +57,7 @@ type tGameContext = {
   openGame: (slug?: string) => tOpenGameResult;
   startNewGame: (slug?: string) => boolean;
   setBoardSize: (boardSize: tBoardSizeOption) => void;
+  setDifficultyPreference: (difficultyPreference: tDifficultyPreference) => void;
   clearSavedGame: () => void;
   showHint: () => void;
   undoMove: () => void;
@@ -59,6 +68,7 @@ const GameContext = React.createContext<tGameContext>({
   gameName: '',
   gameSlug: '',
   boardSize: defaultGameSizeOption,
+  difficultyPreference: defaultDifficultyPreference,
   swapClear: false,
   hasSelectedTile: false,
   canUndo: false,
@@ -68,6 +78,7 @@ const GameContext = React.createContext<tGameContext>({
   openGame: () => 'loaded',
   startNewGame: () => false,
   setBoardSize: () => {},
+  setDifficultyPreference: () => {},
   clearSavedGame: () => {},
   showHint: () => {},
   undoMove: () => {}
@@ -84,6 +95,7 @@ export const GameContextProvider = ({ children }: GameContextProviderProps) => {
   const [gameName, setGameName] = React.useState('');
   const [gameSlug, setGameSlug] = React.useState('');
   const [boardSize, setBoardSize] = React.useState<tBoardSizeOption>(defaultGameSizeOption);
+  const [difficultyPreference, setDifficultyPreference] = React.useState<tDifficultyPreference>(defaultDifficultyPreference);
   const [swapClear, setSwapClear] = React.useState(false);
   const [point1, setPoint1] = React.useState<[number, number]>([-1, -1]); // -1 indicates no selection
   const [hintTiles, setHintTiles] = React.useState<tHintTiles>(null);
@@ -102,6 +114,16 @@ export const GameContextProvider = ({ children }: GameContextProviderProps) => {
       window.clearTimeout(timeoutId);
     };
   }, [swapClear]);
+
+  React.useEffect(() => {
+    if (difficultyPreference === 'any') {
+      return;
+    }
+
+    if (!getAvailableDifficultyTiers(boardSize).includes(difficultyPreference)) {
+      setDifficultyPreference(defaultDifficultyPreference);
+    }
+  }, [boardSize, difficultyPreference]);
 
   React.useEffect(() => {
     updateLocalStorage();
@@ -174,7 +196,22 @@ export const GameContextProvider = ({ children }: GameContextProviderProps) => {
   };
 
   const createNewGame = (slug?: string): boolean => {
-    const boardConfig = slug ? getGameBoardBySlug(slug) : getRandomGameBoard();
+    const boardConfig = slug
+      ? getGameBoardBySlug(slug)
+      : (() => {
+          const matchingBoards = getSelectableGameBoards(boardSize, difficultyPreference);
+          const fallbackBoards = difficultyPreference === 'any'
+            ? matchingBoards
+            : getSelectableGameBoards(boardSize, 'any');
+          const boardPool = matchingBoards.length > 0 ? matchingBoards : fallbackBoards;
+
+          if (boardPool.length === 0) {
+            return undefined;
+          }
+
+          const randomIndex = Math.floor(Math.random() * boardPool.length);
+          return boardPool[randomIndex];
+        })();
     if (!boardConfig) {
       return false;
     }
@@ -292,6 +329,7 @@ export const GameContextProvider = ({ children }: GameContextProviderProps) => {
         gameName,
         gameSlug,
         boardSize,
+        difficultyPreference,
         swapClear,
         hasSelectedTile,
         canUndo,
@@ -301,6 +339,7 @@ export const GameContextProvider = ({ children }: GameContextProviderProps) => {
         openGame,
         startNewGame,
         setBoardSize,
+        setDifficultyPreference,
         clearSavedGame,
         showHint,
         undoMove

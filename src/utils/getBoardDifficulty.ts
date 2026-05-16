@@ -67,15 +67,15 @@ const getLabDistance = (left: string, right: string): number => {
 };
 
 const getDifficultyTier = (score: number): tDifficultyTier => {
-  if (score >= 80) {
+  if (score >= 46) {
     return 'expert';
   }
 
-  if (score >= 60) {
+  if (score >= 36) {
     return 'hard';
   }
 
-  if (score >= 35) {
+  if (score >= 24) {
     return 'medium';
   }
 

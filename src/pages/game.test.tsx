@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { defaultGameSizeOption } from '../config/gameOptions';
+import { defaultDifficultyPreference, defaultGameSizeOption } from '../config/gameOptions';
 import Game from './game';
 import GameContext from '../context/gameContext';
 
@@ -32,6 +32,7 @@ describe('Game', () => {
           gameName: '',
           gameSlug: '',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -41,6 +42,7 @@ describe('Game', () => {
           openGame,
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -63,6 +65,7 @@ describe('Game', () => {
           gameName: 'Summer Dream',
           gameSlug: 'summer-dream',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -72,6 +75,7 @@ describe('Game', () => {
           openGame: jest.fn<OpenGameResult, [string?]>(() => 'loaded'),
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -95,6 +99,7 @@ describe('Game', () => {
           gameName: '',
           gameSlug: '',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -104,6 +109,7 @@ describe('Game', () => {
           openGame,
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -128,6 +134,7 @@ describe('Game', () => {
           gameName: '',
           gameSlug: '',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -137,6 +144,7 @@ describe('Game', () => {
           openGame,
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -160,6 +168,7 @@ describe('Game', () => {
           gameName: '',
           gameSlug: '',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -169,6 +178,7 @@ describe('Game', () => {
           openGame,
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -192,6 +202,7 @@ describe('Game', () => {
           gameName: 'Summer Dream',
           gameSlug: 'summer-dream',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: true,
@@ -201,6 +212,7 @@ describe('Game', () => {
           openGame: jest.fn<OpenGameResult, [string?]>(() => 'loaded'),
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove
@@ -226,6 +238,7 @@ describe('Game', () => {
           gameName: 'Summer Dream',
           gameSlug: 'summer-dream',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -235,6 +248,7 @@ describe('Game', () => {
           openGame: jest.fn<OpenGameResult, [string?]>(() => 'loaded'),
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove
@@ -265,6 +279,7 @@ describe('Game', () => {
           gameName: 'Summer Dream',
           gameSlug: 'summer-dream',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -274,6 +289,7 @@ describe('Game', () => {
           openGame: jest.fn<OpenGameResult, [string?]>(() => 'loaded'),
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint,
           undoMove: () => {}
@@ -304,6 +320,7 @@ describe('Game', () => {
           gameName: 'Summer Dream',
           gameSlug: 'summer-dream',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -313,6 +330,7 @@ describe('Game', () => {
           openGame: jest.fn<OpenGameResult, [string?]>(() => 'loaded'),
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint,
           undoMove: () => {}

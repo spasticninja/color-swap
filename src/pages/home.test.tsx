@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { defaultGameSizeOption } from '../config/gameOptions';
+import { defaultDifficultyPreference, defaultGameSizeOption } from '../config/gameOptions';
 import Home from './home';
 import GameContext from '../context/gameContext';
 import { tGameTile } from '../components/global';
@@ -37,6 +37,7 @@ describe('Home', () => {
           gameName: '',
           gameSlug: '',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -46,6 +47,7 @@ describe('Home', () => {
           openGame: () => 'loaded',
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -58,6 +60,10 @@ describe('Home', () => {
     expect(screen.getByRole('button', { name: 'Start a new game' })).toBeInTheDocument();
     expect(screen.getByRole('radio', { name: '6 x 6' })).toBeInTheDocument();
     expect(screen.getByRole('radio', { name: '9 x 10' })).toHaveAttribute('aria-checked', 'true');
+    expect(screen.getByRole('radio', { name: 'Any' })).toHaveAttribute('aria-checked', 'true');
+    expect(screen.getByRole('radio', { name: 'Easy' })).toBeDisabled();
+    expect(screen.getByRole('radio', { name: 'Hard' })).toBeEnabled();
+    expect(screen.getByRole('radio', { name: 'Expert' })).toBeEnabled();
   });
 
   it('shows a continue label when a saved game exists', () => {
@@ -74,6 +80,7 @@ describe('Home', () => {
           gameName: '',
           gameSlug: '',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -83,6 +90,7 @@ describe('Home', () => {
           openGame: () => 'loaded',
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
@@ -110,6 +118,7 @@ describe('Home', () => {
           gameName: '',
           gameSlug: '',
           boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
           swapClear: false,
           hasSelectedTile: false,
           canUndo: false,
@@ -119,6 +128,7 @@ describe('Home', () => {
           openGame: () => 'loaded',
           startNewGame: () => true,
           setBoardSize: () => {},
+          setDifficultyPreference: () => {},
           clearSavedGame: () => {},
           showHint: () => {},
           undoMove: () => {}
