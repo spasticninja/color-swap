@@ -5,15 +5,13 @@ const baseBoard = (overrides: Partial<tGameBoardBase> = {}): tGameBoardBase => (
   name: 'Test Board',
   slug: 'test-board',
   colors: ['#111111', '#eeeeee', '#cc3333', '#3366cc'],
-  width: 9,
-  height: 10,
   ...overrides
 });
 
 describe('getBoardDifficulty', () => {
   it('treats larger boards as more difficult', () => {
-    const smallBoard = getBoardDifficulty(baseBoard({ width: 6, height: 6 }));
-    const largeBoard = getBoardDifficulty(baseBoard({ width: 12, height: 12 }));
+    const smallBoard = getBoardDifficulty(baseBoard(), { width: 6, height: 6 });
+    const largeBoard = getBoardDifficulty(baseBoard(), { width: 12, height: 12 });
 
     expect(largeBoard.score).toBeGreaterThan(smallBoard.score);
   });
@@ -39,5 +37,15 @@ describe('getBoardDifficulty', () => {
 
     expect(difficulty.score).toBe(88);
     expect(difficulty.tier).toBe('expert');
+  });
+
+  it('uses a stored raw palette score when one is present', () => {
+    const difficulty = getBoardDifficulty(baseBoard({
+      difficultyScore: 22
+    }));
+
+    expect(difficulty.breakdown.paletteScore).toBe(22);
+    expect(difficulty.score).toBe(51);
+    expect(difficulty.tier).toBe('medium');
   });
 });

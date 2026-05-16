@@ -4,6 +4,7 @@
   "description": "A simple color tile swap game built with react",
   "main": "index.js",
   "scripts": {
+    "add:game": "node scripts/add-game.js",
     "dev": "parcel src/index.html --out-dir build/debug",
     "build": "rm -f docs/src.*.js docs/src.*.js.map docs/src.*.css docs/src.*.css.map && parcel build src/index.html --out-dir docs --public-url ./",
     "typecheck": "tsc --noEmit -p tsconfig.test.json",

@@ -1,10 +1,11 @@
 import { tDifficultyTier, tGameBoardBase } from '../../data/game-boards';
-import { tBoardSizeOption } from '../config/gameOptions';
+import { defaultGameSizeOption, tBoardSizeOption } from '../config/gameOptions';
 
 export type tBoardDifficulty = {
   breakdown: {
     colorSimilarityScore: number;
     lowContrastPenalty: number;
+    paletteScore: number;
     sizeScore: number;
   };
   score: number;
@@ -81,6 +82,26 @@ const getDifficultyTier = (score: number): tDifficultyTier => {
   return 'easy';
 };
 
+const getColorDifficultyBreakdown = (colors: tGameBoardBase['colors']) => {
+  const pairDistances: number[] = [];
+  for (let index = 0; index < colors.length; index++) {
+    for (let innerIndex = index + 1; innerIndex < colors.length; innerIndex++) {
+      pairDistances.push(getLabDistance(colors[index], colors[innerIndex]));
+    }
+  }
+
+  const averageDistance = pairDistances.reduce((sum, distance) => sum + distance, 0) / pairDistances.length;
+  const minimumDistance = Math.min(...pairDistances);
+  const colorSimilarityScore = Math.round(clamp(((55 - averageDistance) / 55) * 35, 0, 35));
+  const lowContrastPenalty = Math.round(clamp(((35 - minimumDistance) / 35) * 20, 0, 20));
+
+  return {
+    colorSimilarityScore,
+    lowContrastPenalty,
+    paletteScore: clamp(colorSimilarityScore + lowContrastPenalty, 0, 55)
+  };
+};
+
 export const getBoardDifficulty = (
   board: tGameBoardBase,
   sizeOverride?: Pick<tBoardSizeOption, 'width' | 'height'>
@@ -90,6 +111,7 @@ export const getBoardDifficulty = (
       breakdown: {
         colorSimilarityScore: 0,
         lowContrastPenalty: 0,
+        paletteScore: 0,
         sizeScore: 0
       },
       score: board.difficulty.manualScore,
@@ -97,29 +119,19 @@ export const getBoardDifficulty = (
     };
   }
 
-  const width = sizeOverride?.width ?? board.width;
-  const height = sizeOverride?.height ?? board.height;
+  const width = sizeOverride?.width ?? defaultGameSizeOption.width;
+  const height = sizeOverride?.height ?? defaultGameSizeOption.height;
   const tileCount = width * height;
   const sizeScore = Math.round(clamp(((tileCount - 36) / 84) * 45, 0, 45));
-
-  const pairDistances: number[] = [];
-  for (let index = 0; index < board.colors.length; index++) {
-    for (let innerIndex = index + 1; innerIndex < board.colors.length; innerIndex++) {
-      pairDistances.push(getLabDistance(board.colors[index], board.colors[innerIndex]));
-    }
-  }
-
-  const averageDistance = pairDistances.reduce((sum, distance) => sum + distance, 0) / pairDistances.length;
-  const minimumDistance = Math.min(...pairDistances);
-
-  const colorSimilarityScore = Math.round(clamp(((55 - averageDistance) / 55) * 35, 0, 35));
-  const lowContrastPenalty = Math.round(clamp(((35 - minimumDistance) / 35) * 20, 0, 20));
-  const score = clamp(sizeScore + colorSimilarityScore + lowContrastPenalty, 0, 100);
+  const computedBreakdown = getColorDifficultyBreakdown(board.colors);
+  const paletteScore = board.difficultyScore ?? computedBreakdown.paletteScore;
+  const score = clamp(sizeScore + paletteScore, 0, 100);
 
   return {
     breakdown: {
-      colorSimilarityScore,
-      lowContrastPenalty,
+      colorSimilarityScore: computedBreakdown.colorSimilarityScore,
+      lowContrastPenalty: computedBreakdown.lowContrastPenalty,
+      paletteScore,
       sizeScore
     },
     score,

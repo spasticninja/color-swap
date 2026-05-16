@@ -4,12 +4,15 @@
     "module": "esnext",
     "jsx": "react-jsx",
     "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
     "lib": [
       "dom",
       "es2015"
     ]
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "data/**/*"
   ]
 }

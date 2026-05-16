@@ -7,6 +7,16 @@ A react color tile swap game! Inspired by Color Puzzle and I Love Hue.
 3. Start app with `npm run dev`. 
 4. Go to `http://localhost:1234` in your browser to view the app.
 
+## Adding Games
+Run `npm run add:game` to add a new puzzle. The script will prompt for:
+
+1. puzzle name
+2. slug (optional; generated from the name if left blank)
+3. four corner colors as hex values
+
+The script computes a raw numeric `difficultyScore` from the color distances and appends the new entry to [data/game-boards.json](/Users/allison/Documents/workspace/color-swap/data/game-boards.json).
+The scoring model is documented in [docs/difficulty-scoring.md](/Users/allison/Documents/workspace/color-swap/docs/difficulty-scoring.md:1).
+
 ## Plan
 1. 9 x 10 game board
 2. color gradient tiles
