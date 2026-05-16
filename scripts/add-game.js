@@ -144,11 +144,20 @@ const requireValue = (value, label) => {
   return value;
 };
 
-const normalizeColors = (colors) => colors.map(color => color.trim());
+const normalizeColors = (colors) => colors.map(color => color.trim().toLowerCase());
 
 const ensureUniqueSlug = (boards, slug) => {
   if (boards.some(board => board.slug === slug)) {
     throw new Error(`A game with slug "${slug}" already exists.`);
+  }
+};
+
+const ensureUniqueColorPalette = (boards, colors) => {
+  const normalizedPalette = colors.join('|');
+  const matchingBoard = boards.find(board => normalizeColors(board.colors).join('|') === normalizedPalette);
+
+  if (matchingBoard) {
+    throw new Error(`A game with the same four colors already exists as "${matchingBoard.slug}".`);
   }
 };
 
@@ -207,8 +216,9 @@ const main = async () => {
   const slug = requireValue(slugify(input.slug), 'Slug');
   const colors = normalizeColors(input.colors);
 
-  ensureUniqueSlug(boards, slug);
   validateColors(colors);
+  ensureUniqueSlug(boards, slug);
+  ensureUniqueColorPalette(boards, colors);
   const difficultyScore = getDifficultyScore(colors);
   validateDifficultyScore(difficultyScore);
 

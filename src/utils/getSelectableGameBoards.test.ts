@@ -23,6 +23,6 @@ describe('getSelectableGameBoards', () => {
       throw new Error('Missing compact size option');
     }
 
-    expect(getAvailableDifficultyTiers(compactSize)).toEqual(['easy']);
+    expect(getAvailableDifficultyTiers(compactSize)).toEqual(['easy', 'hard']);
   });
 });

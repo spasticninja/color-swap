@@ -45,8 +45,9 @@ The post-build metadata generator uses `SITE_ORIGIN` when it writes canonical UR
 * [x] Start screen will either randomly select game on intial start or allow them to continue playing (if game in localStorage)
 * [x] win screen love - make prettier and linkable?
 * [x] share & next game selection
-* [ ] allow for different difficulties (game size?)
+* [x] allow for different difficulties (game size?)
 * [x] Make pre-determined games so we can link to different ones?
+* [ ] Choose game by color swatch (secret mode)
 
 ## Credits
 1. Icons: [IconMonstr](https://iconmonstr.com)

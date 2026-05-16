@@ -361,5 +361,192 @@
       "#a30052"
     ],
     "difficultyScore": 17
+  },
+  {
+    "name": "A Fresh Slice",
+    "slug": "a-fresh-slice",
+    "colors": [
+      "#44ddf1",
+      "#f5cd6a",
+      "#eb8f48",
+      "#3a2044"
+    ],
+    "difficultyScore": 2
+  },
+  {
+    "name": "Candytuft Flat",
+    "slug": "candytuft-flat",
+    "colors": [
+      "#c197d2",
+      "#e9d8e1",
+      "#2b8554",
+      "#bb45eb"
+    ],
+    "difficultyScore": 0
+  },
+  {
+    "name": "Welcome to Paradise",
+    "slug": "welcome-to-paradise",
+    "colors": [
+      "#dabbd8",
+      "#f2cfd0",
+      "#4f7f84",
+      "#494c30"
+    ],
+    "difficultyScore": 19
+  },
+  {
+    "name": "Wrap of Colors",
+    "slug": "wrap-of-colors",
+    "colors": [
+      "#e7625f",
+      "#e2b850",
+      "#1f6cb0",
+      "#e24c60"
+    ],
+    "difficultyScore": 14
+  },
+  {
+    "name": "Little Princess",
+    "slug": "little-princess",
+    "colors": [
+      "#fadcdc",
+      "#bfb6b0",
+      "#e6d5e0",
+      "#9b8270"
+    ],
+    "difficultyScore": 36
+  },
+  {
+    "name": "Viola Rosea",
+    "slug": "viola-rosea",
+    "colors": [
+      "#c72788",
+      "#c598af",
+      "#87a9ac",
+      "#333343"
+    ],
+    "difficultyScore": 2
+  },
+  {
+    "name": "Wild Cherry Blossom",
+    "slug": "wild-cherry-blossom",
+    "colors": [
+      "#9d1b6f",
+      "#f3b9df",
+      "#f05b06",
+      "#9782ad"
+    ],
+    "difficultyScore": 4
+  },
+  {
+    "name": "Pineapple Heather",
+    "slug": "pineapple-heather",
+    "colors": [
+      "#e3c1de",
+      "#c598af",
+      "#7b5fe7",
+      "#67726f"
+    ],
+    "difficultyScore": 13
+  },
+  {
+    "name": "Sidewalk Chilling",
+    "slug": "sidewalk-chilling",
+    "colors": [
+      "#867e32",
+      "#d2eaf1",
+      "#fdd365",
+      "#7e7768"
+    ],
+    "difficultyScore": 4
+  },
+  {
+    "name": "Hot Air Weekend",
+    "slug": "hot-air-weekend",
+    "colors": [
+      "#88c9fa",
+      "#e9d8e1",
+      "#f353d5",
+      "#2b18a3"
+    ],
+    "difficultyScore": 1
+  },
+  {
+    "name": "Tulip Sisters",
+    "slug": "tulip-sisters",
+    "colors": [
+      "#310927",
+      "#97474c",
+      "#b67c9a",
+      "#324e3a"
+    ],
+    "difficultyScore": 10
+  },
+  {
+    "name": "Sangria Strands",
+    "slug": "sangria-strands",
+    "colors": [
+      "#e8f1f6",
+      "#493a43",
+      "#c598af",
+      "#cec2b5"
+    ],
+    "difficultyScore": 18
+  },
+  {
+    "name": "Sage Cattleya",
+    "slug": "sage-cattleya",
+    "colors": [
+      "#d3b1c2",
+      "#7f2764",
+      "#958568",
+      "#6c6823"
+    ],
+    "difficultyScore": 8
+  },
+  {
+    "name": "Just Got Married",
+    "slug": "just-got-married",
+    "colors": [
+      "#cb674c",
+      "#6c95b0",
+      "#dbd7d3",
+      "#595421"
+    ],
+    "difficultyScore": 1
+  },
+  {
+    "name": "Colorful Fiber Twists",
+    "slug": "colorful-fiber-twists",
+    "colors": [
+      "#f5b080",
+      "#f68450",
+      "#ff0080",
+      "#343f50"
+    ],
+    "difficultyScore": 5
+  },
+  {
+    "name": "Orchid Perfume",
+    "slug": "orchid-perfume",
+    "colors": [
+      "#fab460",
+      "#f94d90",
+      "#f2dbd0",
+      "#973830"
+    ],
+    "difficultyScore": 0
+  },
+  {
+    "name": "Pastel Dreams",
+    "slug": "pastel-dreams",
+    "colors": [
+      "#fbe7c6",
+      "#b4f8c8",
+      "#a0e7e5",
+      "#ffaebc"
+    ],
+    "difficultyScore": 15
   }
 ]
