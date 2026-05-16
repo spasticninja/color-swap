@@ -43,9 +43,11 @@ a {
 }
 
 .color-swap-wrapper {
+  --page-pad-top: 1.25rem;
+  --page-pad-bottom: 2.5rem;
   width: min(1180px, calc(100% - 2rem));
   margin: 0 auto;
-  padding: 1.25rem 0 2.5rem;
+  padding: var(--page-pad-top) 0 var(--page-pad-bottom);
   min-height: 100dvh;
   box-sizing: border-box;
 }
@@ -185,17 +187,6 @@ a {
 .celebration-card {
   position: relative;
   overflow: hidden;
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: auto -3rem -4rem auto;
-    width: 13rem;
-    height: 13rem;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(181, 93, 76, 0.24), rgba(181, 93, 76, 0));
-    pointer-events: none;
-  }
 }
 
 .celebration-card::after {
@@ -211,12 +202,15 @@ a {
 }
 
 .game-page {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
+  min-height: calc(100dvh - var(--page-pad-top) - var(--page-pad-bottom));
 }
 
 @media (max-width: 700px) {
   .color-swap-wrapper {
+    --page-pad-bottom: 1rem;
     width: min(100% - 1rem, 1180px);
     padding-bottom: 1rem;
   }
