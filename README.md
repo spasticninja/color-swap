@@ -24,6 +24,7 @@ This repo is configured to deploy to GitHub Pages from GitHub Actions.
 2. Push to `main` to run tests, build the static site, and deploy it.
 
 The build writes static assets to `docs/` and also creates `docs/404.html` so direct links like `/game/{slug}` can fall back to the app on GitHub Pages.
+The post-build metadata generator uses `SITE_ORIGIN` when it writes canonical URLs, route-specific share pages, and the sitemap. It defaults to `https://spasticninja.github.io/color-swap`, but you can override it for another host.
 
 ## Plan
 1. 9 x 10 game board
