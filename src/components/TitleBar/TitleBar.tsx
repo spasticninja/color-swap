@@ -2,24 +2,13 @@ import * as React from 'react';
 import { getGameBoardBySlug } from '../../../data/game-boards';
 import { getBoardDifficulty } from '../../utils/getBoardDifficulty';
 import GameContext from '../../context/gameContext';
+import GameSetupModal from '../GameSetup/GameSetupModal';
 import './title-bar.scss';
 
 export type tTitleBar = {
   title: string;
   showTitle?: boolean;
 }
-
-const CopyButton = () => {
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(window.location.href);
-  };
-
-  return (
-    <button aria-label="Copy game link" className="title-action-button" onClick={copyToClipboard} title="Copy game link" type="button">
-      <i className="fa-solid fa-paperclip"></i>
-    </button>
-  );
-};
 
 const HintButton = () => {
   const { gameBoard, showHint } = React.useContext(GameContext);
@@ -47,6 +36,7 @@ const UndoButton = () => {
 const TitleBar = (props: tTitleBar) => {
   const {title, showTitle = false} = props;
   const { boardSize, gameName, gameSlug } = React.useContext(GameContext);
+  const [isGameSetupOpen, setIsGameSetupOpen] = React.useState(false);
   const showGameName = showTitle && Boolean(gameName);
   const difficultyLabel = React.useMemo(() => {
     if (!showGameName || !gameSlug) {
@@ -88,11 +78,22 @@ const TitleBar = (props: tTitleBar) => {
         </h1>
       </div>
       {showTitle ? (
-        <span className="title-bar-actions">
-          <UndoButton />
-          <HintButton />
-          <CopyButton />
-        </span>
+        <>
+          <span className="title-bar-actions">
+            <UndoButton />
+            <HintButton />
+            <button
+              aria-label="Choose game"
+              className="title-action-button"
+              onClick={() => setIsGameSetupOpen(true)}
+              title="Choose game"
+              type="button"
+            >
+              <i className="fa-solid fa-sliders"></i>
+            </button>
+          </span>
+          <GameSetupModal isOpen={isGameSetupOpen} onClose={() => setIsGameSetupOpen(false)} showCopyLink />
+        </>
       ) : null}
     </header>
   );

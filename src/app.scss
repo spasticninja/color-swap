@@ -224,6 +224,54 @@ a {
   min-height: calc(100dvh - var(--page-pad-top) - var(--page-pad-bottom));
 }
 
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(58, 38, 33, 0.38);
+  backdrop-filter: blur(8px);
+}
+
+.modal-card {
+  width: min(42rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  overflow: auto;
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.modal-close-button {
+  border: 1px solid rgba(137, 108, 104, 0.22);
+  background: rgba(255, 249, 242, 0.94);
+  color: #553833;
+  width: 2.7rem;
+  height: 2.7rem;
+  border-radius: 999px;
+  box-shadow: 0 10px 18px rgba(82, 49, 39, 0.12);
+  cursor: pointer;
+  flex: 0 0 auto;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+
+  &:hover,
+  &:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 22px rgba(82, 49, 39, 0.18);
+    background: rgba(255, 255, 255, 0.98);
+  }
+}
+
+.modal-actions {
+  justify-content: flex-end;
+}
+
 @media (max-width: 700px) {
   .color-swap-wrapper {
     --page-pad-bottom: 1rem;
@@ -234,5 +282,10 @@ a {
   .panel-card {
     border-radius: 22px;
     padding: 1.3rem;
+  }
+
+  .modal-card {
+    width: min(100vw - 1rem, 42rem);
+    max-height: calc(100dvh - 1rem);
   }
 }

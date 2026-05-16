@@ -1,25 +1,16 @@
 import * as React from 'react';
-import { gameDifficultyOptions, gameSizeOptions } from '../config/gameOptions';
 import GameContext from '../context/gameContext';
 import TitleBar from '../components/TitleBar/TitleBar';
+import GameSetupOptions from '../components/GameSetup/GameSetupOptions';
 import useCheckSolution from '../hooks/useCheckSolution';
 import { useHistory } from "react-router-dom";
-import { getAvailableDifficultyTiers } from '../utils/getSelectableGameBoards';
 
 const STORAGE_KEY = 'color-swap-game';
 
 const Home = () => {
-  const {
-    boardSize,
-    difficultyPreference,
-    openGame,
-    setBoardSize,
-    setDifficultyPreference,
-    startNewGame
-  } = React.useContext(GameContext);
+  const { openGame, startNewGame } = React.useContext(GameContext);
   const history = useHistory();
   const [hasSavedGame, setHasSavedGame] = React.useState(false);
-  const availableDifficultyTiers = React.useMemo(() => getAvailableDifficultyTiers(boardSize), [boardSize]);
 
   React.useEffect(() => {
     const savedGameRaw = window.localStorage.getItem(STORAGE_KEY);
@@ -56,51 +47,7 @@ const Home = () => {
         <h2>Welcome to Color Swap!</h2>
         <p>Swap two color tiles at a time until the full gradient locks back into place.</p>
         <p>Select one tile, then another, and watch the palette snap toward the solution. Corner dots mark the fixed anchor tiles that cannot be moved.</p>
-        <div className="game-options">
-          <h3 className="game-options-label">Board size</h3>
-          <div className="size-options" role="radiogroup" aria-label="Board size">
-            {gameSizeOptions.map(option => {
-              const isSelected = option.id === boardSize.id;
-
-              return (
-                <button
-                  aria-checked={isSelected}
-                  className={`size-option${isSelected ? ' selected' : ''}`}
-                  key={option.id}
-                  onClick={() => setBoardSize(option)}
-                  role="radio"
-                  type="button"
-                >
-                  {option.label}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-        <div className="game-options">
-          <h3 className="game-options-label">Difficulty</h3>
-          <p className="game-options-help">Difficulty options depend on which puzzle tiers exist for the selected board size.</p>
-          <div className="size-options" role="radiogroup" aria-label="Difficulty">
-            {gameDifficultyOptions.map(option => {
-              const isSelected = option.id === difficultyPreference;
-              const isAvailable = option.id === 'any' || availableDifficultyTiers.includes(option.id);
-
-              return (
-                <button
-                  aria-checked={isSelected}
-                  className={`size-option${isSelected ? ' selected' : ''}`}
-                  disabled={!isAvailable}
-                  key={option.id}
-                  onClick={() => setDifficultyPreference(option.id)}
-                  role="radio"
-                  type="button"
-                >
-                  {option.label}
-                </button>
-              );
-            })}
-          </div>
-        </div>
+        <GameSetupOptions />
         <div className="page-actions">
           {hasSavedGame ? (
             <>

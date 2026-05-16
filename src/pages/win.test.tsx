@@ -16,7 +16,7 @@ describe('Win', () => {
     push.mockClear();
   });
 
-  it('starts a fresh game from the win screen', () => {
+  it('opens the chooser modal from the win screen and starts a fresh game', () => {
     const startNewGame = jest.fn();
 
     render(
@@ -46,7 +46,10 @@ describe('Win', () => {
       </GameContext.Provider>
     );
 
-    fireEvent.click(screen.getByRole('button', { name: 'Try another puzzle' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Choose another puzzle' }));
+    expect(screen.getByRole('dialog', { name: 'Choose your next game' })).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Start selected game' }));
 
     expect(startNewGame).toHaveBeenCalledTimes(1);
     expect(push).toHaveBeenCalledWith('/game');

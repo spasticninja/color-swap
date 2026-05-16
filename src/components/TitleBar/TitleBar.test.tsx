@@ -73,6 +73,45 @@ describe('TitleBar', () => {
     expect(screen.getByText(/easy|intermediate|hard|expert/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Undo move' })).toBeDisabled();
     expect(screen.getByRole('button', { name: 'Show hint' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Choose game' })).toBeInTheDocument();
+  });
+
+  it('opens the game setup modal from the choose game button', () => {
+    render(
+      <GameContext.Provider
+        value={{
+          gameBoard: [[{
+            color: '#ffffff',
+            isCorrect: false,
+            isLocked: false,
+            correctCoord: [0, 1]
+          }]],
+          gameName: 'Four deep colors',
+          gameSlug: 'four-deep-colors',
+          boardSize: defaultGameSizeOption,
+          difficultyPreference: defaultDifficultyPreference,
+          swapClear: false,
+          hasSelectedTile: false,
+          canUndo: false,
+          selectedTile: null,
+          hintTiles: null,
+          updateGameBoard: () => {},
+          openGame: () => 'loaded',
+          startNewGame: () => true,
+          setBoardSize: () => {},
+          setDifficultyPreference: () => {},
+          clearSavedGame: () => {},
+          showHint: () => {},
+          undoMove: () => {}
+        }}
+      >
+        <TitleBar title="Color Swap" showTitle />
+      </GameContext.Provider>
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'Choose game' }));
+
+    expect(screen.getByRole('dialog', { name: 'Choose your next game' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Copy game link' })).toBeInTheDocument();
   });
 
