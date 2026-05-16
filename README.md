@@ -17,6 +17,14 @@ Run `npm run add:game` to add a new puzzle. The script will prompt for:
 The script computes a raw numeric `difficultyScore` from the color distances and appends the new entry to [data/game-boards.json](/Users/allison/Documents/workspace/color-swap/data/game-boards.json).
 The scoring model is documented in [docs/difficulty-scoring.md](/Users/allison/Documents/workspace/color-swap/docs/difficulty-scoring.md:1).
 
+## GitHub Pages
+This repo is configured to deploy to GitHub Pages from GitHub Actions.
+
+1. In GitHub repo settings, set Pages to use `GitHub Actions` as the source.
+2. Push to `main` to run tests, build the static site, and deploy it.
+
+The build writes static assets to `docs/` and also creates `docs/404.html` so direct links like `/game/{slug}` can fall back to the app on GitHub Pages.
+
 ## Plan
 1. 9 x 10 game board
 2. color gradient tiles

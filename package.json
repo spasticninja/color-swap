@@ -6,7 +6,7 @@
   "scripts": {
     "add:game": "node scripts/add-game.js",
     "dev": "parcel src/index.html --out-dir build/debug",
-    "build": "rm -f docs/src.*.js docs/src.*.js.map docs/src.*.css docs/src.*.css.map && parcel build src/index.html --out-dir docs --public-url ./",
+    "build": "rm -f docs/src.*.js docs/src.*.js.map docs/src.*.css docs/src.*.css.map docs/404.html docs/.nojekyll && parcel build src/index.html --out-dir docs --public-url ./ && cp docs/index.html docs/404.html && touch docs/.nojekyll",
     "typecheck": "tsc --noEmit -p tsconfig.test.json",
     "test": "jest",
     "test:watch": "jest --watch"
