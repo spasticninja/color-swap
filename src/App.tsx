@@ -11,11 +11,18 @@ import {
 
 import './app.scss';
 
-const App = () => {
+const githubPagesBasePath = '/color-swap';
 
+const getRouterBasename = () => (
+  window.location.pathname === githubPagesBasePath || window.location.pathname.startsWith(`${githubPagesBasePath}/`)
+    ? githubPagesBasePath
+    : ''
+);
+
+const App = () => {
   return (
     <div className="color-swap-wrapper">
-      <Router>
+      <Router basename={getRouterBasename()}>
         <GameContextProvider>
           <Switch>
             <Route exact path="/">
